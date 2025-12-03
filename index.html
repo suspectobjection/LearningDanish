@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>Изучение датского языка с Женей</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    /* ====== Общие стили ====== */
+    :root{
+      --bg:#071021;
+      --card:#0f1724;
+      --muted:#9aa0a6;
+      --accent:#00d4b4;
+      --accent-2:#ff7a59;
+      --glass: rgba(255,255,255,0.04);
+      --success:#4ade80;
+      --danger:#ff6b6b;
+      --font-sans: "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:var(--font-sans);background:linear-gradient(180deg,#04101a,#071021);color:#e6eef6}
+    a{color:var(--accent)}
+    .container{max-width:1200px;margin:28px auto;padding:20px;display:grid;grid-template-columns:260px 1fr 320px;gap:18px}
+    header{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+    h1{margin:0;font-size:20px;color:var(--accent)}
+    .subtitle{color:var(--muted);font-size:13px}
+
+    /* ====== Левое меню ====== */
+    .sidebar{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:14px;border:1px solid var(--glass)}
+    .profile{display:flex;gap:12px;align-items:center}
+    .avatar{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#0ea5a4,#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:800;color:#021;box-shadow:0 6px 18px rgba(0,0,0,0.5)}
+    .userInfo{flex:1}
+    .userName{font-weight:800}
+    .userLevel{font-size:13px;color:var(--muted)}
+    .menu{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+    .menu button{background:transparent;border:1px solid var(--glass);padding:10px;border-radius:10px;color:#e6eef6;cursor:pointer;font-weight:700}
+    .menu button.active{background:linear-gradient(90deg, rgba(0,212,180,0.12), rgba(255,122,89,0.06));border-color:rgba(0,212,180,0.18);box-shadow:0 6px 18px rgba(0,0,0,0.5)}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* ====== Центр: контент ====== */
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:18px;border:1px solid var(--glass);box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    .lessons{display:flex;flex-direction:column;gap:12px}
+    .lesson{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.02);cursor:pointer;transition:transform .18s ease}
+    .lesson:hover{transform:translateY(-6px)}
+    .lesson .meta{display:flex;flex-direction:column}
+    .lesson .title{font-weight:800}
+    .lesson .desc{font-size:13px;color:var(--muted)}
+    .startBtn{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;padding:8px 12px;border-radius:8px;color:#021;font-weight:800;cursor:pointer}
+
+    /* ====== Правый столбец: помощник и прогресс ====== */
+    .assistant{background:linear-gradient(180deg,#071a1f,#07121a);padding:14px;border-radius:12px;border:1px solid var(--glass)}
+    .assistant .head{display:flex;gap:12px;align-items:center}
+    .assistant .char{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#ffb86b,#ff7a59);display:flex;align-items:center;justify-content:center;font-weight:900;color:#2b0a00}
+    .assistant .msg{margin-top:12px;background:rgba(255,255,255,0.02);padding:10px;border-radius:10px;font-size:14px}
+    .progressBar{height:12px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden;margin-top:10px}
+    .progressFill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;transition:width .6s ease}
+
+    /* ====== Модальные окна / упражнения ====== */
+    .modalBack{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:9999}
+    .modal{width:920px;max-width:96%;background:linear-gradient(180deg,#07121a,#07101a);padding:18px;border-radius:12px;border:1px solid var(--glass);box-shadow:0 20px 60px rgba(0,0,0,0.7)}
+    .modal h2{margin:0 0 8px 0;color:var(--accent)}
+    .row{display:flex;gap:12px;align-items:center}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+    .cardItem{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);text-align:center;cursor:pointer;transition:transform .12s ease}
+    .cardItem:hover{transform:translateY(-6px)}
+    .correct{outline:3px solid rgba(74,222,128,0.18);box-shadow:0 8px 30px rgba(74,222,128,0.06)}
+    .wrong{outline:3px solid rgba(255,107,107,0.12);box-shadow:0 8px 30px rgba(255,107,107,0.04)}
+    .dragArea{min-height:60px;border:2px dashed rgba(255,255,255,0.03);border-radius:8px;padding:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .chip{padding:8px 10px;border-radius:999px;background:#0b1220;border:1px solid rgba(255,255,255,0.03);cursor:grab}
+    .chip.dragging{opacity:0.5;transform:scale(1.02)}
+    .btnRow{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+    .btn{padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:800}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021}
+    .btn.ghost{background:transparent;border:1px solid var(--glass);color:#e6eef6}
+
+    /* ====== Анимации и мелочи ====== */
+    .pulse{animation:pulse 1.6s infinite}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+    .fadeIn{animation:fadeIn .4s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+    .hint{font-size:13px;color:var(--muted);margin-top:8px}
+    footer{grid-column:1/-1;text-align:center;color:var(--muted);margin-top:18px;font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Изучение датского языка с Женей</h1>
+        <div class="subtitle">Lær dansk med Zhenya — A1 / A2 • интерактивно • локально</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <div id="welcomeText" class="small">Velkommen — добро пожаловать</div>
+        <div id="authArea"></div>
+      </div>
+    </header>
+
+    <!-- Left: profile & menu -->
+    <aside class="sidebar card">
+      <div class="profile">
+        <div class="avatar" id="avatar">Ж</div>
+        <div class="userInfo">
+          <div class="userName" id="userName">Гость</div>
+          <div class="userLevel" id="userLevel">Niveau: —</div>
+        </div>
+      </div>
+
+      <div class="menu" style="margin-top:14px">
+        <button class="active" data-view="lessons">Lektioner / Уроки</button>
+        <button data-view="practice">Øvelser / Практика</button>
+        <button data-view="profile">Profil</button>
+        <button data-view="tycoon">Spil / Игры</button>
+      </div>
+
+      <div style="margin-top:14px">
+        <div class="small">Очки</div>
+        <div style="font-weight:900;font-size:20px;margin-top:6px" id="points">0</div>
+        <div class="small hint">Прогресс и достижения сохраняются локально</div>
+      </div>
+    </aside>
+
+    <!-- Center: lessons -->
+    <main>
+      <div class="card">
+        <h2>Уроки / Lektioner</h2>
+        <div class="lessons" id="lessonsList">
+          <!-- lessons injected by JS -->
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h2>Проверка знаний перед уроком / Forudgående test</h2>
+        <div class="small">Короткий тест, чтобы понять ваш уровень и адаптировать задания</div>
+        <div style="margin-top:12px">
+          <button class="startBtn" id="startPrecheck">Начать проверку / Start test</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right: assistant -->
+    <aside class="assistant card">
+      <div class="head">
+        <div class="char">Ж</div>
+        <div>
+          <div style="font-weight:900">Женя — din hjælper</div>
+          <div class="small">Я помогу с произношением, исправлю ошибки и подскажу</div>
+        </div>
+      </div>
+
+      <div class="msg" id="assistantMsg">Привет! Выбери урок, и я помогу тебе пройти его.</div>
+
+      <div style="margin-top:12px">
+        <div class="small">Прогресс уровня</div>
+        <div class="progressBar"><div class="progressFill" id="progressFill" style="width:0%"></div></div>
+        <div class="small hint" id="progressText">0 / 0</div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="small">Быстрые действия</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn ghost" id="btnPractice">Практика</button>
+          <button class="btn ghost" id="btnGames">Игры</button>
+        </div>
+      </div>
+    </aside>
+
+    <footer>© 2025 Изучение датского языка с Женей — локальная демо‑версия</footer>
+  </div>
+
+  <!-- Modal backdrop -->
+  <div class="modalBack" id="modalBack">
+    <div class="modal" id="modal"></div>
+  </div>
+
+  <script>
+    /************************************************************************
+     * Простая локальная платформа "Изучение датского языка с Женей"
+     * Регистрация/логин в localStorage, уровни A1/A2, уроки, упражнения,
+     * ассистент, очки и прогресс.
+     *
+     * Это демо: пароли хранятся в localStorage (base64) — не безопасно для продакшена.
+     ************************************************************************/
+
+    /* ====== Хранилище и пользователи ====== */
+    const STORAGE_USERS = 'ld_users_v1';
+    const STORAGE_CURRENT = 'ld_current_v1';
+    const STORAGE_PROGRESS = 'ld_progress_v1';
+
+    // Получить объект пользователей
+    function loadUsers(){
+      try { return JSON.parse(localStorage.getItem(STORAGE_USERS) || '{}'); }
+      catch(e){ return {}; }
+    }
+    function saveUsers(u){ localStorage.setItem(STORAGE_USERS, JSON.stringify(u)); }
+
+    // Текущий пользователь
+    function setCurrentUser(username){
+      localStorage.setItem(STORAGE_CURRENT, username);
+      renderAuthArea();
+      renderProfile();
+      renderLessons();
+      updateAssistant(`Привет, ${username}! Готов учить датский?`);
+    }
+    function getCurrentUser(){
+      return localStorage.getItem(STORAGE_CURRENT) || null;
+    }
+    function clearCurrentUser(){
+      localStorage.removeItem(STORAGE_CURRENT);
+      renderAuthArea();
+      renderProfile();
+      renderLessons();
+      updateAssistant('Вы вышли. Войдите или зарегистрируйтесь, чтобы продолжить.');
+    }
+
+    // Прогресс: структура { username: { level: 'A1', points: 0, completed: {lessonId:true}, lessonProgress: {...} } }
+    function loadProgress(){
+      try { return JSON.parse(localStorage.getItem(STORAGE_PROGRESS) || '{}'); }
+      catch(e){ return {}; }
+    }
+    function saveProgress(p){ localStorage.setItem(STORAGE_PROGRESS, JSON.stringify(p)); }
+
+    /* ====== UI: аутентификация ====== */
+    const authArea = document.getElementById('authArea');
+
+    function renderAuthArea(){
+      const cur = getCurrentUser();
+      authArea.innerHTML = '';
+      if(cur){
+        const span = document.createElement('div');
+        span.textContent = cur;
+        span.className = 'small';
+        const btn = document.createElement('button');
+        btn.textContent = 'Log ud';
+        btn.className = 'btn ghost';
+        btn.onclick = () => { clearCurrentUser(); };
+        authArea.appendChild(span);
+        authArea.appendChild(btn);
+      } else {
+        const loginBtn = document.createElement('button');
+        loginBtn.textContent = 'Log ind';
+        loginBtn.className = 'btn ghost';
+        loginBtn.onclick = showLogin;
+        const regBtn = document.createElement('button');
+        regBtn.textContent = 'Registrer';
+        regBtn.className = 'btn primary';
+        regBtn.onclick = showRegister;
+        authArea.appendChild(loginBtn);
+        authArea.appendChild(regBtn);
+      }
+    }
+
+    /* ====== Модальные окна: регистрация / логин ====== */
+    const modalBack = document.getElementById('modalBack');
+    const modal = document.getElementById('modal');
+
+    function openModal(html){
+      modal.innerHTML = html;
+      modalBack.style.display = 'flex';
+    }
+    function closeModal(){
+      modalBack.style.display = 'none';
+      modal.innerHTML = '';
+    }
+    modalBack.addEventListener('click', (e)=>{ if(e.target === modalBack) closeModal(); });
+
+    function showRegister(){
+      openModal(`
+        <h2>Registrer / Регистрация</h2>
+        <div class="small">Создайте аккаунт — данные хранятся локально</div>
+        <div style="margin-top:12px">
+          <label class="small">Логин / Brugernavn</label>
+          <input id="regUser" style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid var(--glass);background:transparent;color:#e6eef6">
+        </div>
+        <div style="margin-top:8px" class="row">
+          <div style="flex:1">
+            <label class="small">Пароль / Adgangskode</label>
+            <input id="regPass" type="password" style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid var(--glass);background:transparent;color:#e6eef6">
+          </div>
+          <div style="width:160px">
+            <label class="small">Уровень / Niveau</label>
+            <select id="regLevel" style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid var(--glass);background:transparent;color:#e6eef6">
+              <option value="A1">A1</option>
+              <option value="A2">A2</option>
+            </select>
+          </div>
+        </div>
+        <div class="btnRow">
+          <button class="btn ghost" id="regCancel">Отмена</button>
+          <button class="btn primary" id="regSubmit">Зарегистрироваться</button>
+        </div>
+      `);
+      document.getElementById('regCancel').onclick = closeModal;
+      document.getElementById('regSubmit').onclick = () => {
+        const u = document.getElementById('regUser').value.trim();
+        const p = document.getElementById('regPass').value;
+        const lvl = document.getElementById('regLevel').value;
+        if(!u || !p){ alert('Введите логин и пароль'); return; }
+        const users = loadUsers();
+        if(users[u]){ alert('Пользователь уже существует'); return; }
+        users[u] = { pass: btoa(p), level: lvl, created: Date.now() };
+        saveUsers(users);
+        // init progress
+        const prog = loadProgress();
+        prog[u] = { level: lvl, points: 0, completed: {}, lessonProgress: {} };
+        saveProgress(prog);
+        setCurrentUser(u);
+        closeModal();
+      };
+    }
+
+    function showLogin(){
+      openModal(`
+        <h2>Log ind / Вход</h2>
+        <div class="small">Введите логин и пароль</div>
+        <div style="margin-top:12px">
+          <label class="small">Логин</label>
+          <input id="logUser" style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid var(--glass);background:transparent;color:#e6eef6">
+        </div>
+        <div style="margin-top:8px">
+          <label class="small">Пароль</label>
+          <input id="logPass" type="password" style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid var(--glass);background:transparent;color:#e6eef6">
+        </div>
+        <div class="btnRow">
+          <button class="btn ghost" id="logCancel">Отмена</button>
+          <button class="btn primary" id="logSubmit">Войти</button>
+        </div>
+      `);
+      document.getElementById('logCancel').onclick = closeModal;
+      document.getElementById('logSubmit').onclick = () => {
+        const u = document.getElementById('logUser').value.trim();
+        const p = document.getElementById('logPass').value;
+        const users = loadUsers();
+        if(!users[u]){ alert('Пользователь не найден'); return; }
+        if(users[u].pass !== btoa(p)){ alert('Неверный пароль'); return; }
+        setCurrentUser(u);
+        closeModal();
+      };
+    }
+
+    /* ====== Данные уроков (пример) ====== */
+    const LESSONS = [
+      { id:'a1-1', level:'A1', title:'Приветствия / Hilsner', desc:'Основные фразы: hej, godmorgen, farvel', exercises:['vocab','sentence','text'] },
+      { id:'a1-2', level:'A1', title:'Числа и время / Tal og tid', desc:'Числа 1–20, как сказать время', exercises:['vocab','quiz'] },
+      { id:'a2-1', level:'A2', title:'Покупки / Indkøb', desc:'Фразы в магазине, вопросы и ответы', exercises:['vocab','sentence','text'] },
+      { id:'a2-2', level:'A2', title:'Путешествия / Rejser', desc:'Как спросить дорогу, транспорт', exercises:['vocab','quiz'] }
+    ];
+
+    /* ====== Рендер уроков ====== */
+    const lessonsList = document.getElementById('lessonsList');
+    function renderLessons(){
+      lessonsList.innerHTML = '';
+      const cur = getCurrentUser();
+      const prog = loadProgress();
+      const userLevel = cur ? (prog[cur] ? prog[cur].level : 'A1') : 'A1';
+      document.getElementById('userLevel').textContent = `Niveau: ${userLevel}`;
+      document.getElementById('userName').textContent = cur || 'Гость';
+      document.getElementById('avatar').textContent = cur ? cur[0].toUpperCase() : 'Ж';
+      LESSONS.forEach(ls => {
+        // show only lessons for selected level and above
+        if(ls.level !== userLevel && (cur && prog[cur] && prog[cur].level !== ls.level)) {
+          // still show but dimmed if not matching level
+        }
+        const el = document.createElement('div');
+        el.className = 'lesson fadeIn';
+        el.innerHTML = `<div class="meta"><div class="title">${ls.title}</div><div class="desc">${ls.desc}</div></div><div><button class="startBtn">Start</button></div>`;
+        el.querySelector('.startBtn').onclick = ()=> openLesson(ls.id);
+        lessonsList.appendChild(el);
+      });
+    }
+
+    /* ====== Открытие урока и выбор упражнения ====== */
+    function openLesson(lessonId){
+      const lesson = LESSONS.find(l=>l.id===lessonId);
+      if(!lesson) return;
+      openModal(`
+        <h2>${lesson.title}</h2>
+        <div class="small">${lesson.desc}</div>
+        <div style="margin-top:12px">
+          <div class="small">Выберите упражнение / Vælg øvelse</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            ${lesson.exercises.map(ex=>`<button class="btn ghost" data-ex="${ex}">${ex.toUpperCase()}</button>`).join('')}
+          </div>
+        </div>
+        <div class="btnRow"><button class="btn ghost" id="closeLesson">Закрыть</button></div>
+      `);
+      modal.querySelectorAll('button[data-ex]').forEach(b=>{
+        b.onclick = ()=> {
+          const ex = b.getAttribute('data-ex');
+          closeModal();
+          startExercise(lessonId, ex);
+        };
+      });
+      document.getElementById('closeLesson').onclick = closeModal;
+    }
+
+    /* ====== Ассистент ====== */
+    function updateAssistant(text){
+      const el = document.getElementById('assistantMsg');
+      el.textContent = text;
+    }
+
+    /* ====== Прогресс и очки ====== */
+    function addPoints(n){
+      const cur = getCurrentUser();
+      if(!cur) return;
+      const prog = loadProgress();
+      if(!prog[cur]) prog[cur] = { level:'A1', points:0, completed:{}, lessonProgress:{} };
+      prog[cur].points = (prog[cur].points || 0) + n;
+      saveProgress(prog);
+      renderProfile();
+    }
+    function renderProfile(){
+      const cur = getCurrentUser();
+      const pointsEl = document.getElementById('points');
+      const prog = loadProgress();
+      if(cur && prog[cur]){
+        pointsEl.textContent = prog[cur].points || 0;
+        const total = 100; // demo total
+        const pct = Math.min(100, Math.round((prog[cur].points || 0) / total * 100));
+        document.getElementById('progressFill').style.width = pct + '%';
+        document.getElementById('progressText').textContent = `${prog[cur].points || 0} / ${total}`;
+      } else {
+        pointsEl.textContent = '0';
+        document.getElementById('progressFill').style.width = '0%';
+        document.getElementById('progressText').textContent = '0 / 0';
+      }
+    }
+
+    /* ====== Упражнения ====== */
+    // startExercise(lessonId, type) -> открывает модал с нужным упражнением
+    function startExercise(lessonId, type){
+      const lesson = LESSONS.find(l=>l.id===lessonId);
+      updateAssistant(`Упражнение: ${type}. Я помогу и подскажу ошибки.`);
+      if(type === 'vocab') startVocab(lesson);
+      else if(type === 'sentence') startSentence(lesson);
+      else if(type === 'text') startText(lesson);
+      else if(type === 'quiz') startQuiz(lesson);
+      else { alert('Неизвестное упражнение'); }
+    }
+
+    /* ---- Vocab: сопоставление слов ---- */
+    function startVocab(lesson){
+      // demo word pairs (Danish -> Russian)
+      const pairs = {
+        'Приветствия / Hilsner': [
+          ['hej','привет'],
+          ['godmorgen','доброе утро'],
+          ['farvel','до свидания']
+        ],
+        'Числа и время / Tal og tid': [
+          ['en','один'],
+          ['to','два'],
+          ['tre','три']
+        ],
+        'Покупки / Indkøb': [
+          ['butik','магазин'],
+          ['pris','цена'],
+          ['kvittering','чек']
+        ],
+        'Путешествия / Rejser': [
+          ['bus','автобус'],
+          ['station','станция'],
+          ['billet','билет']
+        ]
+      };
+      const key = lesson.title;
+      const list = pairs[key] || [['hej','привет'],['tak','спасибо'],['undskyld','извините']];
+      // shuffle
+      const left = shuffle(list.map(p=>p[0]));
+      const right = shuffle(list.map(p=>p[1]));
+      openModal(`
+        <h2>Словарная пара — ${lesson.title}</h2>
+        <div class="small">Соедините датское слово с переводом</div>
+        <div style="display:flex;gap:12px;margin-top:12px">
+          <div style="flex:1">
+            <div class="small">Danish</div>
+            <div id="leftCol" style="margin-top:8px"></div>
+          </div>
+          <div style="flex:1">
+            <div class="small">Русский</div>
+            <div id="rightCol" style="margin-top:8px"></div>
+          </div>
+        </div>
+        <div class="btnRow"><button class="btn ghost" id="cancelVocab">Отмена</button><button class="btn primary" id="checkVocab">Проверить</button></div>
+      `);
+      const leftCol = document.getElementById('leftCol');
+      const rightCol = document.getElementById('rightCol');
+      left.forEach(w=>{
+        const d = document.createElement('div'); d.className='cardItem'; d.textContent = w; d.dataset.word = w;
+        d.onclick = ()=> { d.classList.toggle('selected'); };
+        leftCol.appendChild(d);
+      });
+      right.forEach(w=>{
+        const d = document.createElement('div'); d.className='cardItem'; d.textContent = w; d.dataset.word = w;
+        d.onclick = ()=> { d.classList.toggle('selected'); };
+        rightCol.appendChild(d);
+      });
+      document.getElementById('cancelVocab').onclick = closeModal;
+      document.getElementById('checkVocab').onclick = ()=>{
+        // simple check: count correct matches by mapping
+        const selectedLeft = Array.from(leftCol.querySelectorAll('.cardItem.selected')).map(x=>x.dataset.word);
+        const selectedRight = Array.from(rightCol.querySelectorAll('.cardItem.selected')).map(x=>x.dataset.word);
+        // For demo, require equal counts and check if pairs exist in original list
+        let correct = 0;
+        selectedLeft.forEach((l,i)=>{
+          const r = selectedRight[i];
+          if(list.some(p=>p[0]===l && p[1]===r)) correct++;
+        });
+        const total = list.length;
+        const points = Math.round((correct/Math.max(1,selectedLeft.length)) * 10);
+        addPoints(points);
+        updateAssistant(`Вы набрали ${points} очков в словах. Правильно: ${correct}/${selectedLeft.length}`);
+        alert(`Результат: ${correct} правильных пар. +${points} очков`);
+        closeModal();
+      };
+    }
+
+    /* ---- Sentence: построение предложений (drag & drop) ---- */
+    function startSentence(lesson){
+      // demo sentences
+      const examples = {
+        'Приветствия / Hilsner': [
+          { dan:'Hvordan har du det?', rus:'Как у тебя дела?', parts:['Hvordan','har','du','det?'] },
+          { dan:'Godmorgen, hvordan går det?', rus:'Доброе утро, как дела?', parts:['Godmorgen,','hvordan','går','det?'] }
+        ],
+        'Покупки / Indkøb': [
+          { dan:'Hvor meget koster det?', rus:'Сколько это стоит?', parts:['Hvor','meget','koster','det?'] }
+        ]
+      };
+      const list = examples[lesson.title] || [{dan:'Tak for i dag',rus:'Спасибо за сегодня',parts:['Tak','for','i','dag']}];
+      const item = list[0];
+      const shuffled = shuffle(item.parts.slice());
+      openModal(`
+        <h2>Построение предложения</h2>
+        <div class="small">Соберите предложение по-датски: ${item.rus}</div>
+        <div style="margin-top:12px">
+          <div class="dragArea" id="dropArea"></div>
+          <div style="margin-top:10px" id="chipsArea"></div>
+        </div>
+        <div class="btnRow"><button class="btn ghost" id="cancelSent">Отмена</button><button class="btn primary" id="checkSent">Проверить</button></div>
+      `);
+      const dropArea = document.getElementById('dropArea');
+      const chipsArea = document.getElementById('chipsArea');
+      shuffled.forEach(p=>{
+        const c = document.createElement('div'); c.className='chip'; c.textContent = p; c.draggable = true;
+        c.addEventListener('dragstart', (e)=>{ c.classList.add('dragging'); e.dataTransfer.setData('text/plain', p); });
+        c.addEventListener('dragend', ()=>{ c.classList.remove('dragging'); });
+        chipsArea.appendChild(c);
+      });
+      dropArea.addEventListener('dragover', (e)=>{ e.preventDefault(); });
+      dropArea.addEventListener('drop', (e)=>{ e.preventDefault(); const text = e.dataTransfer.getData('text/plain'); if(!text) return;
+        // move chip from chipsArea to dropArea
+        const chip = Array.from(chipsArea.children).find(ch=>ch.textContent===text);
+        if(chip){ dropArea.appendChild(chip); }
+      });
+      document.getElementById('cancelSent').onclick = closeModal;
+      document.getElementById('checkSent').onclick = ()=>{
+        const assembled = Array.from(dropArea.children).map(c=>c.textContent).join(' ');
+        const correct = item.parts.join(' ');
+        const ok = assembled.trim() === correct.trim();
+        if(ok){ addPoints(12); updateAssistant('Отлично! Предложение собрано правильно.'); alert('Правильно! +12 очков'); }
+        else { addPoints(2); updateAssistant('Почти — проверь порядок слов.'); alert(`Неправильно. Собрано: "${assembled}"\nПравильно: "${correct}"\n+2 очка за попытку`); }
+        closeModal();
+      };
+    }
+
+    /* ---- Text comprehension (MCQ) ---- */
+    function startText(lesson){
+      const texts = {
+        'Приветствия / Hilsner': {
+          text: 'Hej! Jeg hedder Zhenya. Hvordan har du det i dag?',
+          q: [
+            { q:'Hvad betyder "Hej"?', opts:['Привет','Пока','Спасибо'], a:0 },
+            { q:'Hvad spørger sætningen?', opts:['Navn','Hvordan du har det','Tid'], a:1 }
+          ]
+        },
+        'Покупки / Indkøb': {
+          text: 'I butikken køber jeg brød og mælk. Prisen er 20 kr.',
+          q: [
+            { q:'Hvad køber personen?', opts:['Brød og mælk','Bøger','Tøj'], a:0 },
+            { q:'Hvor meget koster det?', opts:['20 kr','50 kr','10 kr'], a:0 }
+          ]
+        }
+      };
+      const data = texts[lesson.title] || { text:'Kort tekst...', q:[] };
+      openModal(`
+        <h2>Текстовое понимание</h2>
+        <div class="small">Прочитайте текст и ответьте на вопросы</div>
+        <div style="margin-top:12px;background:rgba(255,255,255,0.02);padding:12px;border-radius:8px">${data.text}</div>
+        <div id="mcqArea" style="margin-top:12px"></div>
+        <div class="btnRow"><button class="btn ghost" id="closeText">Закрыть</button></div>
+      `);
+      const mcqArea = document.getElementById('mcqArea');
+      data.q.forEach((qq, idx)=>{
+        const block = document.createElement('div'); block.style.marginTop='10px';
+        block.innerHTML = `<div class="small" style="font-weight:800">${idx+1}. ${qq.q}</div>`;
+        qq.opts.forEach((opt,i)=>{
+          const b = document.createElement('button'); b.className='optionBtn'; b.textContent = opt; b.style.marginTop='6px';
+          b.onclick = ()=> {
+            if(i===qq.a){ b.classList.add('correct'); addPoints(6); updateAssistant('Правильно!'); alert('Верно! +6 очков'); }
+            else { b.classList.add('wrong'); addPoints(1); updateAssistant('Неправильно — попробуй ещё.'); alert('Неверно. +1 очко'); }
+            // disable all options for this question
+            Array.from(block.querySelectorAll('.optionBtn')).forEach(x=>x.disabled=true);
+          };
+          block.appendChild(b);
+        });
+        mcqArea.appendChild(block);
+      });
+      document.getElementById('closeText').onclick = closeModal;
+    }
+
+    /* ---- Quiz (short MCQ) ---- */
+    function startQuiz(lesson){
+      const qset = [
+        { q:'Hvad betyder "tak"?', opts:['Спасибо','Пожалуйста','Привет'], a:0 },
+        { q:'Hvordan siger man "до свидания"?', opts:['Hej','Farvel','Godmorgen'], a:1 }
+      ];
+      let idx = 0;
+      let score = 0;
+      openModal(`
+        <h2>Короткий квиз</h2>
+        <div class="small" id="quizHint">Вопросы по теме</div>
+        <div id="quizArea" style="margin-top:12px"></div>
+        <div class="btnRow"><button class="btn ghost" id="closeQuiz">Закрыть</button></div>
+      `);
+      const quizArea = document.getElementById('quizArea');
+      function renderQ(){
+        if(idx >= qset.length){
+          addPoints(score*5);
+          alert(`Квиз завершён. Баллы: ${score}. +${score*5} очков`);
+          closeModal();
+          return;
+        }
+        const Q = qset[idx];
+        quizArea.innerHTML = `<div class="small" style="font-weight:800">${idx+1}. ${Q.q}</div>`;
+        Q.opts.forEach((opt,i)=>{
+          const b = document.createElement('button'); b.className='optionBtn'; b.textContent = opt; b.style.marginTop='8px';
+          b.onclick = ()=> {
+            if(i===Q.a){ b.classList.add('correct'); score++; updateAssistant('Правильно!'); }
+            else { b.classList.add('wrong'); updateAssistant('Неправильно.'); }
+            Array.from(quizArea.querySelectorAll('.optionBtn')).forEach(x=>x.disabled=true);
+            setTimeout(()=>{ idx++; renderQ(); }, 800);
+          };
+          quizArea.appendChild(b);
+        });
+      }
+      document.getElementById('closeQuiz').onclick = closeModal;
+      renderQ();
+    }
+
+    /* ====== Pre-check тест (короткий) ====== */
+    document.getElementById('startPrecheck').onclick = ()=> {
+      // простой тест: 3 вопроса
+      openModal(`
+        <h2>Проверка знаний / Forudgående test</h2>
+        <div class="small">Короткий тест, чтобы адаптировать уроки</div>
+        <div id="preArea" style="margin-top:12px"></div>
+        <div class="btnRow"><button class="btn ghost" id="cancelPre">Отмена</button></div>
+      `);
+      const preArea = document.getElementById('preArea');
+      const questions = [
+        { q:'Hvad betyder "hej"?', opts:['Привет','Пока','Спасибо'], a:0 },
+        { q:'Hvad betyder "tak"?', opts:['Спасибо','Пожалуйста','Извините'], a:0 },
+        { q:'Hvordan siger man "до свидания"?', opts:['Hej','Farvel','Goddag'], a:1 }
+      ];
+      let idx = 0;
+      let correct = 0;
+      function renderPre(){
+        if(idx >= questions.length){
+          // result: if >=2 correct -> A1 else A1 baseline; demo: just show result
+          const cur = getCurrentUser();
+          if(cur){
+            const prog = loadProgress();
+            if(!prog[cur]) prog[cur] = { level:'A1', points:0, completed:{}, lessonProgress:{} };
+            prog[cur].points = (prog[cur].points || 0) + correct*3;
+            saveProgress(prog);
+            renderProfile();
+          }
+          alert(`Тест завершён. Правильных: ${correct}/${questions.length}. +${correct*3} очков`);
+          closeModal();
+          return;
+        }
+        const Q = questions[idx];
+        preArea.innerHTML = `<div class="small" style="font-weight:800">${idx+1}. ${Q.q}</div>`;
+        Q.opts.forEach((opt,i)=>{
+          const b = document.createElement('button'); b.className='optionBtn'; b.textContent = opt; b.style.marginTop='8px';
+          b.onclick = ()=> {
+            if(i===Q.a){ b.classList.add('correct'); correct++; }
+            else { b.classList.add('wrong'); }
+            Array.from(preArea.querySelectorAll('.optionBtn')).forEach(x=>x.disabled=true);
+            setTimeout(()=>{ idx++; renderPre(); }, 700);
+          };
+          preArea.appendChild(b);
+        });
+      }
+      document.getElementById('cancelPre').onclick = closeModal;
+      renderPre();
+    };
+
+    /* ====== Утилиты ====== */
+    function shuffle(arr){ return arr.map(a=>[Math.random(),a]).sort((a,b)=>a[0]-b[0]).map(a=>a[1]); }
+
+    /* ====== Инициализация ====== */
+    renderAuthArea();
+    renderLessons();
+    renderProfile();
+    updateAssistant('Привет! Я Женя — твой помощник по датскому. Нажми "Registrer" или "Log ind", чтобы начать.');
+
+    // Меню навигация
+    document.querySelectorAll('.menu button').forEach(btn=>{
+      btn.onclick = ()=> {
+        document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const view = btn.dataset.view;
+        if(view === 'lessons') { /* already main */ }
+        else if(view === 'practice') { alert('Практика — откроется модал с упражнениями'); }
+        else if(view === 'profile') { showProfileModal(); }
+        else if(view === 'tycoon') { alert('Игры — в разработке (демо)'); }
+      };
+    });
+
+    // quick actions
+    document.getElementById('btnPractice').onclick = ()=> { document.querySelector('.menu button[data-view="practice"]').click(); };
+    document.getElementById('btnGames').onclick = ()=> { document.querySelector('.menu button[data-view="tycoon"]').click(); };
+
+    function showProfileModal(){
+      const cur = getCurrentUser();
+      const users = loadUsers();
+      const prog = loadProgress();
+      const data = cur ? (prog[cur] || {level:'A1',points:0}) : {level:'A1',points:0};
+      openModal(`
+        <h2>Профиль</h2>
+        <div class="small">Пользователь: ${cur || 'Гость'}</div>
+        <div style="margin-top:12px">
+          <div class="small">Уровень</div>
+          <select id="profileLevel" style="margin-top:6px;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:#e6eef6">
+            <option value="A1">A1</option><option value="A2">A2</option>
+          </select>
+        </div>
+        <div style="margin-top:12px" class="small">Очки: ${data.points || 0}</div>
+        <div class="btnRow"><button class="btn ghost" id="closeProf">Закрыть</button><button class="btn primary" id="saveProf">Сохранить</button></div>
+      `);
+      document.getElementById('profileLevel').value = data.level || 'A1';
+      document.getElementById('closeProf').onclick = closeModal;
+      document.getElementById('saveProf').onclick = ()=>{
+        const lvl = document.getElementById('profileLevel').value;
+        if(cur){
+          const prog = loadProgress();
+          if(!prog[cur]) prog[cur] = {level:lvl,points:0,completed:{},lessonProgress:{}};
+          prog[cur].level = lvl;
+          saveProgress(prog);
+          renderProfile();
+          renderLessons();
+          updateAssistant(`Уровень сохранён: ${lvl}`);
+        }
+        closeModal();
+      };
+    }
+
+    // small helper: open lesson by id if passed in URL
+    (function checkUrl(){
+      const params = new URLSearchParams(location.search);
+      const lesson = params.get('lesson');
+      if(lesson) {
+        const l = LESSONS.find(x=>x.id===lesson);
+        if(l) openLesson(l.id);
+      }
+    })();
+
+  </script>
+</body>
+</html>
