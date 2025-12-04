@@ -2,692 +2,274 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
-  <title>Изучение датского с Женей — Авто‑курс (A1→A2)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Angelthon AI — генератор кода (Roblox и Web)</title>
+  <meta name="description" content="Angelthon AI — генератор и наставник по кодингу для Roblox (Lua) и Web (HTML/CSS/JS). Не сокращает код, добавляет функции аккуратно." />
   <style>
-    :root{
-      --bg:#07121a; --card:#0f1b23; --muted:#9fb0b8; --text:#eaf6f5;
-      --accent:#00d4b4; --accent2:#ff7a59; --glass:rgba(255,255,255,0.04);
-      --success:#4ade80; --danger:#ff6b6b; --font: "Segoe UI", Roboto, Arial, sans-serif;
+    :root {
+      --bg: #0f1216; --card: #151a21; --text: #e7ebf0; --muted: #a7b0bf;
+      --primary: #7dd3fc; --accent: #a78bfa; --border: #253043;
+      --danger: #ef4444; --ok: #10b981; --mono: ui-monospace, Menlo, Consolas, monospace;
+      --sans: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:var(--font);background:linear-gradient(180deg,#04101a,#07121a);color:var(--text)}
-    header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--glass)}
-    h1{margin:0;font-size:18px;color:var(--accent)}
-    .subtitle{color:var(--muted);font-size:13px}
-    .layout{max-width:1100px;margin:18px auto;display:grid;grid-template-columns:320px 1fr 320px;gap:16px;padding:0 12px}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:14px;border:1px solid var(--glass)}
-    .profile{display:flex;gap:12px;align-items:center}
-    .avatar{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#ffd166,#ff7a59);display:flex;align-items:center;justify-content:center;font-weight:900;color:#2b0a00}
-    .small{font-size:13px;color:var(--muted)}
-    .btn{padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:800}
-    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#021}
-    .btn.ghost{background:transparent;border:1px solid var(--glass);color:var(--text)}
-    .lessonItem{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;background:rgba(255,255,255,0.01);margin-top:8px}
-    .locked{opacity:0.45}
-    .progressBar{height:12px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden;margin-top:8px}
-    .progressFill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .6s ease}
-    .centerCard{min-height:420px}
-    .modalBack{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:9999}
-    .modal{width:920px;max-width:96%;background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--glass)}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .vocabRow{display:flex;justify-content:space-between;padding:8px;border-radius:8px;background:rgba(255,255,255,0.01);margin-top:6px}
-    .chip{padding:8px 10px;border-radius:999px;background:#0b1220;border:1px solid rgba(255,255,255,0.03);cursor:grab;margin:6px}
-    .dragArea{min-height:60px;border:2px dashed rgba(255,255,255,0.03);border-radius:8px;padding:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .option{padding:10px;border-radius:8px;background:#0b1112;border:1px solid rgba(255,255,255,0.02);cursor:pointer;margin-top:8px}
-    .correct{outline:3px solid rgba(74,222,128,0.18)}
-    .wrong{outline:3px solid rgba(255,107,107,0.12)}
-    .small-muted{font-size:12px;color:var(--muted)}
-    @media (max-width:1000px){ .layout{grid-template-columns:1fr; padding:0 12px} .avatar{width:48px;height:48px} }
+    * { box-sizing: border-box }
+    body { margin:0; font-family:var(--sans); background: var(--bg); color:var(--text) }
+    .container { max-width: 1000px; margin: 0 auto; padding: 24px }
+    header { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:16px }
+    .brand h1 { margin:0; font-size:18px }
+    .muted { color:var(--muted) }
+    .hero { display:grid; grid-template-columns: 1.1fr 1fr; gap:16px; margin-top:16px }
+    .card { background: linear-gradient(180deg, rgba(21,26,33,.85), rgba(21,26,33,.65)); border:1px solid var(--border); border-radius:14px; padding:16px }
+    .split { display:grid; grid-template-columns: 1fr 1fr; gap:12px }
+    label { font-size:13px; color:var(--muted) }
+    select, textarea { width:100%; background:#0c1116; color:var(--text); border:1px solid var(--border); border-radius:12px; padding:10px 12px; outline:none }
+    textarea { min-height:140px; resize:vertical }
+    .actions { display:flex; gap:10px; margin-top:10px }
+    button { background:var(--primary); color:#0b1020; border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-weight:600; cursor:pointer }
+    button.secondary { background:transparent; color:var(--text) }
+    .tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px }
+    .tab { font-size:12px; color:var(--muted); border:1px solid var(--border); border-radius:999px; padding:6px 10px; background:rgba(21,26,33,.5); cursor:pointer }
+    .tab.active { color:var(--text); border-color:var(--accent) }
+    pre { margin:0; background:#0c1116; color:var(--text); border:1px solid var(--border); border-radius:12px; padding:12px; overflow:auto; font-family:var(--mono); font-size:13px }
+    .footer { border-top:1px solid var(--border); margin-top:18px; padding-top:14px; color:var(--muted); font-size:13px }
+    @media (max-width:900px){ .hero{ grid-template-columns:1fr } .split{ grid-template-columns:1fr } }
   </style>
 </head>
 <body>
-  <header>
-    <div>
-      <h1>Изучение датского с Женей — Авто‑курс</h1>
-      <div class="subtitle">Линейный путь: уроки идут по очереди, SRS, грамматика, тесты</div>
-    </div>
-    <div id="authArea"></div>
-  </header>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <h1>Angelthon AI</h1>
+        <div class="muted">Генератор кода: Roblox · Web</div>
+      </div>
+      <div class="muted">Не сокращаем — только расширяем</div>
+    </header>
 
-  <div class="layout">
-    <!-- Left: profile & progress -->
-    <aside class="card">
-      <div class="profile">
-        <div class="avatar" id="avatar">Ж</div>
-        <div>
-          <div style="font-weight:900" id="userName">Гость</div>
-          <div class="small" id="userLevel">Уровень: —</div>
+    <section class="hero">
+      <div class="card">
+        <h2 style="margin:0 0 8px">Запрос</h2>
+        <p class="muted">Опиши задачу. Выбери режим Roblox или Web. Нажми «Сгенерировать».</p>
+
+        <div class="split">
+          <div>
+            <label for="mode">Режим</label>
+            <select id="mode">
+              <option value="roblox">Roblox (Lua)</option>
+              <option value="web">Web (HTML/CSS/JS)</option>
+            </select>
+          </div>
+          <div>
+            <label for="policy">Политика изменения</label>
+            <select id="policy">
+              <option value="extend">Только расширять (без сокращений)</option>
+              <option value="replace">Переписать полностью (по запросу)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top:10px">
+          <label for="prompt">Описание задачи</label>
+          <textarea id="prompt" placeholder="Например: добавь функцию логирования в мой 300‑строчный скрипт Roblox, не изменяя существующие строки;"></textarea>
+        </div>
+
+        <div class="actions">
+          <button id="runBtn">Сгенерировать</button>
+          <button class="secondary" id="clearBtn">Очистить</button>
         </div>
       </div>
 
-      <div style="margin-top:12px">
-        <div class="small">Текущий урок</div>
-        <div style="font-weight:900;margin-top:6px" id="currentLessonTitle">—</div>
-        <div class="progressBar"><div class="progressFill" id="lessonProgress" style="width:0%"></div></div>
-        <div class="small-muted" id="lessonProgressText">0 / 0</div>
-      </div>
-
-      <div style="margin-top:12px">
-        <div class="small">Очки</div>
-        <div style="font-weight:900;font-size:20px;margin-top:6px" id="points">0</div>
-      </div>
-
-      <div style="margin-top:12px">
-        <div class="small">Повторения сегодня</div>
-        <div id="dueCount" style="font-weight:800;margin-top:6px">0</div>
-      </div>
-
-      <div style="margin-top:12px;display:flex;gap:8px">
-        <button class="btn ghost" id="btnProfile">Профиль</button>
-        <button class="btn ghost" id="btnExport">Экспорт</button>
-      </div>
-    </aside>
-
-    <!-- Center: lesson flow -->
-    <main class="card centerCard">
-      <div id="flowArea">
-        <h2 id="flowTitle">Готово к началу</h2>
-        <div class="small-muted" id="flowSubtitle">Нажмите «Начать урок», и система сама поведёт вас по блокам</div>
-
-        <div style="margin-top:12px">
-          <button class="btn primary" id="startLessonBtn">Начать урок</button>
-          <button class="btn ghost" id="nextAutoBtn" style="display:none">Следующий блок</button>
+      <div class="card">
+        <h2 style="margin:0 0 8px">Результат</h2>
+        <div class="tabs">
+          <button class="tab active" data-tab="spec">Спека</button>
+          <button class="tab" data-tab="code">Код</button>
+          <button class="tab" data-tab="tests">Тесты</button>
+          <button class="tab" data-tab="instructions">Инструкции</button>
+          <button class="tab" data-tab="diff">Diff</button>
         </div>
 
-        <div id="blockArea" style="margin-top:14px"></div>
+        <div id="panel-spec"><pre id="spec"><code>// Здесь будет спецификация задачи</code></pre></div>
+        <div id="panel-code" hidden><pre id="code"><code>// Здесь будет сгенерированный код</code></pre></div>
+        <div id="panel-tests" hidden><pre id="tests"><code>// Здесь будут тесты и чек‑листы</code></pre></div>
+        <div id="panel-instructions" hidden><pre id="instructions"><code>// Здесь будут инструкции по запуску и внедрению</code></pre></div>
+        <div id="panel-diff" hidden><pre id="diff"><code>// Здесь будет дифф изменений</code></pre></div>
       </div>
+    </section>
 
-      <div id="lessonListArea" style="margin-top:18px">
-        <h3>Список уроков (линейно)</h3>
-        <div id="lessonsContainer"></div>
-      </div>
-    </main>
-
-    <!-- Right: assistant & controls -->
-    <aside class="card">
-      <div style="display:flex;gap:12px;align-items:center">
-        <div class="avatar" style="width:48px;height:48px;background:linear-gradient(135deg,#00d4b4,#06b6d4);font-size:18px">Ж</div>
-        <div>
-          <div style="font-weight:900">Женя — помощник</div>
-          <div class="small-muted">Я веду тебя по курсу, повторяю слабые слова и объясняю грамматику</div>
-        </div>
-      </div>
-
-      <div style="margin-top:12px" id="assistantMsg">Выбери «Начать урок», чтобы начать.</div>
-
-      <div style="margin-top:12px">
-        <div class="small">Голос (TTS)</div>
-        <select id="voiceSelect" style="width:100%;margin-top:8px;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass)"></select>
-        <div style="margin-top:8px;display:flex;gap:8px">
-          <button class="btn ghost" id="speakBtn">Произнести</button>
-          <button class="btn ghost" id="stopSpeakBtn">Стоп</button>
-        </div>
-      </div>
-
-      <div style="margin-top:12px">
-        <div class="small">Настройки</div>
-        <div style="margin-top:8px" class="small-muted">Дневная цель (мин)</div>
-        <input id="dailyGoal" type="number" value="20" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);margin-top:6px">
-      </div>
-    </aside>
+    <footer class="footer">© 2025 Angelthon AI — узкий и честный кодер. Расширяем, не сжимаем.</footer>
   </div>
 
-  <!-- Modal -->
-  <div class="modalBack" id="modalBack"><div class="modal" id="modal"></div></div>
-
-<script>
-/* =========================
-   Авто‑курс: последовательный движок + SRS (SM‑2) + UI
-   Хранение: localStorage
-   ========================= */
-
-/* Storage keys */
-const KEY_USERS = 'zhenya_users_v2';
-const KEY_CURRENT = 'zhenya_current_v2';
-const KEY_PROGRESS = 'zhenya_progress_v2';
-const KEY_LESSONS = 'zhenya_lessons_v2';
-
-/* Utilities */
-const $ = id => document.getElementById(id);
-const now = () => Date.now();
-const daysMs = n => n * 24 * 60 * 60 * 1000;
-const saveJSON = (k,v) => localStorage.setItem(k, JSON.stringify(v));
-const loadJSON = (k, fallback) => { try { return JSON.parse(localStorage.getItem(k) || JSON.stringify(fallback)); } catch(e){ return fallback; } };
-
-/* SM-2 algorithm helpers */
-function sm2_update(item, quality){
-  // quality: 0..5
-  if(!item.ef) item.ef = 2.5;
-  if(!item.repetitions) item.repetitions = 0;
-  if(quality < 3){
-    item.repetitions = 0;
-    item.interval = 1;
-  } else {
-    item.repetitions += 1;
-    if(item.repetitions === 1) item.interval = 1;
-    else if(item.repetitions === 2) item.interval = 6;
-    else item.interval = Math.round(item.interval * item.ef);
-  }
-  item.ef = item.ef + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
-  if(item.ef < 1.3) item.ef = 1.3;
-  item.nextReview = now() + item.interval * 24 * 60 * 60 * 1000;
-  if(!item.history) item.history = [];
-  item.history.push({ t: now(), q: quality });
-  return item;
-}
-
-/* Default lessons (sample A1→A2 minimal set; scalable) */
-const DEFAULT_LESSONS = [
-  { id:'a1-001', level:'A1', title:'Приветствия', desc:'hej, godmorgen, farvel', vocab:[
-      {id:'w1', dan:'hej', ru:'привет'}, {id:'w2', dan:'godmorgen', ru:'доброе утро'}, {id:'w3', dan:'farvel', ru:'до свидания'},
-      {id:'w4', dan:'tak', ru:'спасибо'}, {id:'w5', dan:'undskyld', ru:'извините'}
-    ],
-    grammar:{ id:'g1', title:'Личные местоимения', text:'jeg, du, han, hun — порядок слов в простом предложении', examples:['Jeg hedder Anna.','Du er velkommen.'] },
-    sentences:[ 'Hej, hvordan har du det?', 'Tak, det går godt.' ],
-    text:{ dan:'Hej! Jeg hedder Zhenya. Velkommen til dansk.', ru:'Привет! Меня зовут Женя. Добро пожаловать в датский.' },
-    quiz:[
-      { q:'Hvad betyder "hej"?', opts:['Привет','Пока','Спасибо'], a:0 },
-      { q:'Hvad betyder "tak"?', opts:['Спасибо','Пожалуйста','Извините'], a:0 }
-    ]
-  },
-  { id:'a1-002', level:'A1', title:'Числа и возраст', desc:'en, to, tre, alder', vocab:[
-      {id:'w6', dan:'en', ru:'один'}, {id:'w7', dan:'to', ru:'два'}, {id:'w8', dan:'tre', ru:'три'}, {id:'w9', dan:'alder', ru:'возраст'}
-    ],
-    grammar:{ id:'g2', title:'Глагол "at være"', text:'быть — jeg er, du er, han er', examples:['Jeg er 30 år.','Du er sød.'] },
-    sentences:[ 'Jeg er 25 år gammel.', 'Hvor gammel er du?' ],
-    text:{ dan:'Tal er vigtige. En, to, tre.', ru:'Числа важны. Один, два, три.' },
-    quiz:[
-      { q:'Hvad betyder "to"?', opts:['Два','Три','Четыре'], a:0 },
-      { q:'Hvordan siger man "сколько лет"?', opts:['Hvor gammel','Hvad tid','Hvor meget'], a:0 }
-    ]
-  },
-  { id:'a1-003', level:'A1', title:'Семья', desc:'mor, far, søster, bror', vocab:[
-      {id:'w10', dan:'mor', ru:'мама'}, {id:'w11', dan:'far', ru:'папа'}, {id:'w12', dan:'søster', ru:'сестра'}
-    ],
-    grammar:{ id:'g3', title:'Притяжательные', text:'min, din, hans, hendes', examples:['Min mor er sød.','Din bog.'] },
-    sentences:[ 'Min far arbejder i byen.', 'Jeg har en søster.' ],
-    text:{ dan:'Familie er vigtig.', ru:'Семья важна.' },
-    quiz:[
-      { q:'Hvad betyder "mor"?', opts:['Мама','Папа','Сестра'], a:0 },
-      { q:'Hvad er "min"?', opts:['Мой','Твой','Его'], a:0 }
-    ]
-  },
-  // more lessons can be appended programmatically or via import
-];
-
-/* Initialize lessons in storage if absent */
-let lessons = loadJSON(KEY_LESSONS, null);
-if(!lessons || !Array.isArray(lessons) || lessons.length === 0){
-  lessons = DEFAULT_LESSONS;
-  saveJSON(KEY_LESSONS, lessons);
-}
-
-/* Users & progress */
-function loadUsers(){ return loadJSON(KEY_USERS, {}); }
-function saveUsers(u){ saveJSON(KEY_USERS, u); }
-function loadProgress(){ return loadJSON(KEY_PROGRESS, {}); }
-function saveProgress(p){ saveJSON(KEY_PROGRESS, p); }
-
-/* Auth UI */
-function renderAuth(){
-  const cur = localStorage.getItem(KEY_CURRENT);
-  const area = $('authArea');
-  area.innerHTML = '';
-  if(cur){
-    const span = document.createElement('div'); span.className='small-muted'; span.textContent = cur;
-    const btn = document.createElement('button'); btn.className='btn ghost'; btn.textContent='Выйти'; btn.onclick = ()=>{ localStorage.removeItem(KEY_CURRENT); renderAll(); };
-    area.appendChild(span); area.appendChild(btn);
-  } else {
-    const login = document.createElement('button'); login.className='btn ghost'; login.textContent='Войти'; login.onclick = showLogin;
-    const reg = document.createElement('button'); reg.className='btn primary'; reg.textContent='Регистрация'; reg.onclick = showRegister;
-    area.appendChild(login); area.appendChild(reg);
-  }
-}
-
-/* Modal helpers */
-function openModal(html){ $('modal').innerHTML = html; $('modalBack').style.display = 'flex'; }
-function closeModal(){ $('modalBack').style.display = 'none'; $('modal').innerHTML = ''; }
-$('modalBack').addEventListener('click', e => { if(e.target === $('modalBack')) closeModal(); });
-
-/* Registration & Login */
-function showRegister(){
-  openModal(`
-    <h2>Регистрация</h2>
-    <div class="small-muted">Создайте локальный аккаунт</div>
-    <div style="margin-top:12px">
-      <label class="small-muted">Логин</label>
-      <input id="regUser" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:var(--text)">
-    </div>
-    <div style="margin-top:8px">
-      <label class="small-muted">Пароль</label>
-      <input id="regPass" type="password" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:var(--text)">
-    </div>
-    <div style="margin-top:8px">
-      <label class="small-muted">Уровень</label>
-      <select id="regLevel" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:var(--text)">
-        <option value="A1">A1</option><option value="A2">A2</option>
-      </select>
-    </div>
-    <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn ghost" id="regCancel">Отмена</button>
-      <button class="btn primary" id="regSubmit">Зарегистрироваться</button>
-    </div>
-  `);
-  $('regCancel').onclick = closeModal;
-  $('regSubmit').onclick = ()=>{
-    const u = $('regUser').value.trim(); const p = $('regPass').value; const lvl = $('regLevel').value;
-    if(!u || !p){ alert('Введите логин и пароль'); return; }
-    const users = loadUsers();
-    if(users[u]){ alert('Пользователь уже существует'); return; }
-    users[u] = { pass: btoa(p), created: now() };
-    saveUsers(users);
-    const prog = loadProgress();
-    prog[u] = { level: lvl, points: 0, completed: {}, srs: {} , currentLessonIndex: 0 };
-    saveProgress(prog);
-    localStorage.setItem(KEY_CURRENT, u);
-    closeModal(); renderAll();
-  };
-}
-
-function showLogin(){
-  openModal(`
-    <h2>Вход</h2>
-    <div class="small-muted">Введите логин и пароль</div>
-    <div style="margin-top:12px">
-      <label class="small-muted">Логин</label>
-      <input id="logUser" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:var(--text)">
-    </div>
-    <div style="margin-top:8px">
-      <label class="small-muted">Пароль</label>
-      <input id="logPass" type="password" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:var(--text)">
-    </div>
-    <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn ghost" id="logCancel">Отмена</button>
-      <button class="btn primary" id="logSubmit">Войти</button>
-    </div>
-  `);
-  $('logCancel').onclick = closeModal;
-  $('logSubmit').onclick = ()=>{
-    const u = $('logUser').value.trim(); const p = $('logPass').value;
-    const users = loadUsers();
-    if(!users[u]){ alert('Пользователь не найден'); return; }
-    if(users[u].pass !== btoa(p)){ alert('Неверный пароль'); return; }
-    localStorage.setItem(KEY_CURRENT, u);
-    closeModal(); renderAll();
-  };
-}
-
-/* Render lessons list (linear, locked/unlocked) */
-function renderLessonsList(){
-  const container = $('lessonsContainer'); container.innerHTML = '';
-  const cur = localStorage.getItem(KEY_CURRENT);
-  const prog = loadProgress();
-  const userProg = cur && prog[cur] ? prog[cur] : null;
-  const currentIndex = userProg ? (userProg.currentLessonIndex || 0) : 0;
-  lessons.forEach((ls, idx) => {
-    const div = document.createElement('div'); div.className='lessonItem';
-    if(idx > currentIndex) div.classList.add('locked');
-    div.innerHTML = `<div><div style="font-weight:900">${ls.title}</div><div class="small-muted">${ls.desc}</div></div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <div class="small-muted">${ls.level}</div>
-        <button class="btn ghost" ${idx>currentIndex?'disabled':''} data-idx="${idx}">Открыть</button>
-      </div>`;
-    container.appendChild(div);
-    div.querySelector('button').onclick = ()=> {
-      if(idx > currentIndex){ alert('Этот урок заблокирован. Пройдите предыдущие уроки.'); return; }
-      // set current lesson index to idx and start
-      if(cur){
-        prog[cur].currentLessonIndex = idx; saveProgress(prog); renderAll(); startLessonFlow();
-      } else alert('Войдите, чтобы начать урок');
+  <script>
+    // Табы
+    const tabs = document.querySelectorAll('.tab');
+    const panels = {
+      spec: document.getElementById('panel-spec'),
+      code: document.getElementById('panel-code'),
+      tests: document.getElementById('panel-tests'),
+      instructions: document.getElementById('panel-instructions'),
+      diff: document.getElementById('panel-diff')
     };
-  });
-}
-
-/* Engine: sequence of blocks for a lesson */
-const BLOCKS = ['intro','vocab_new','grammar','practice_vocab','practice_grammar','sentence','reading','quiz','review','complete'];
-
-function startLessonFlow(){
-  const cur = localStorage.getItem(KEY_CURRENT);
-  if(!cur){ alert('Войдите, чтобы начать'); return; }
-  const prog = loadProgress(); const user = prog[cur];
-  const idx = user.currentLessonIndex || 0;
-  const lesson = lessons[idx];
-  if(!lesson){ alert('Урок не найден'); return; }
-  // initialize lesson session state
-  session.lesson = { idx, lesson, blockIndex: 0, stats: { correct:0, total:0 } };
-  $('flowTitle').textContent = `Урок: ${lesson.title}`;
-  $('flowSubtitle').textContent = lesson.desc;
-  $('currentLessonTitle').textContent = lesson.title;
-  $('startLessonBtn').style.display = 'none';
-  $('nextAutoBtn').style.display = 'inline-block';
-  renderBlock();
-}
-
-/* Render current block */
-const session = { lesson: null };
-function renderBlock(){
-  const area = $('blockArea'); area.innerHTML = '';
-  if(!session.lesson) return;
-  const { lesson, blockIndex } = session.lesson;
-  const block = BLOCKS[blockIndex];
-  $('assistantMsg').textContent = `Блок: ${block}`;
-  if(block === 'intro'){
-    area.innerHTML = `<div class="card"><h3>Введение</h3><div class="small-muted">Цель урока: ${lesson.title}</div><div style="margin-top:8px">${lesson.desc}</div></div>`;
-  } else if(block === 'vocab_new'){
-    area.innerHTML = `<h3>Новые слова</h3><div class="small-muted">Прослушайте и повторите</div><div id="vocabList"></div>`;
-    const list = lesson.vocab || [];
-    const vl = $('vocabList');
-    list.forEach(w=>{
-      const row = document.createElement('div'); row.className='vocabRow';
-      row.innerHTML = `<div><strong>${w.dan}</strong><div class="small-muted">${w.ru}</div></div><div><button class="btn ghost" data-dan="${w.dan}">▶</button></div>`;
-      vl.appendChild(row);
-      row.querySelector('button').onclick = ()=> speak(w.dan);
+    tabs.forEach(t => {
+      t.addEventListener('click', () => {
+        tabs.forEach(x => x.classList.remove('active'));
+        Object.values(panels).forEach(p => p.hidden = true);
+        t.classList.add('active');
+        panels[`panel-${t.dataset.tab}`]?.removeAttribute('hidden');
+      });
     });
-  } else if(block === 'grammar'){
-    area.innerHTML = `<h3>Грамматика</h3><div class="small-muted">${lesson.grammar.title}</div><div style="margin-top:8px">${lesson.grammar.text}</div><div style="margin-top:8px"><strong>Примеры:</strong><ul>${lesson.grammar.examples.map(e=>`<li>${e}</li>`).join('')}</ul></div>`;
-  } else if(block === 'practice_vocab'){
-    area.innerHTML = `<h3>Практика слов</h3><div class="small-muted">Выберите перевод</div><div id="practiceVocabArea"></div>`;
-    practiceVocab(lesson);
-    return;
-  } else if(block === 'practice_grammar'){
-    area.innerHTML = `<h3>Практика грамматики</h3><div class="small-muted">Примените правило</div><div id="practiceGrammarArea"></div>`;
-    practiceGrammar(lesson);
-    return;
-  } else if(block === 'sentence'){
-    area.innerHTML = `<h3>Построение предложений</h3><div class="small-muted">Соберите предложение</div><div id="sentenceArea"></div>`;
-    practiceSentence(lesson);
-    return;
-  } else if(block === 'reading'){
-    area.innerHTML = `<h3>Чтение</h3><div class="small-muted">Короткий текст</div><div style="margin-top:8px;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px">${lesson.text.dan}</div>`;
-  } else if(block === 'quiz'){
-    area.innerHTML = `<h3>Контрольный квиз</h3><div class="small-muted">Наберите минимум 70% для зачёта</div><div id="quizArea"></div>`;
-    practiceQuiz(lesson);
-    return;
-  } else if(block === 'review'){
-    area.innerHTML = `<h3>Повторение (SRS)</h3><div class="small-muted">Повторите слабые слова</div><div id="reviewArea"></div>`;
-    practiceReview();
-    return;
-  } else if(block === 'complete'){
-    area.innerHTML = `<h3>Завершение урока</h3><div id="completeArea"></div>`;
-    completeLesson();
-    return;
+
+    // Элементы ввода
+    const modeEl = document.getElementById('mode');
+    const policyEl = document.getElementById('policy');
+    const promptEl = document.getElementById('prompt');
+    const runBtn = document.getElementById('runBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    // Вывод
+    const specEl = document.getElementById('spec');
+    const codeEl = document.getElementById('code');
+    const testsEl = document.getElementById('tests');
+    const instrEl = document.getElementById('instructions');
+    const diffEl = document.getElementById('diff');
+
+    // Демо-генератор без бэкенда: формирует контент по режиму
+    function generateContent(mode, policy, prompt) {
+      const baseSpec =
+`taskId: DEMO-${mode.toUpperCase()}
+mode: ${mode}
+policy: ${policy}
+userPrompt: ${prompt || "(нет описания)"}
+rules:
+  - Не сокращать существующий код
+  - Добавлять функции как расширение
+  - Показать diff изменений`;
+
+      let code = "";
+      let tests = "";
+      let instr = "";
+      let diff = "";
+
+      if (mode === "roblox") {
+        code =
+`-- Roblox (Lua) скелет для расширения
+-- Пример: добавление новой функции, не трогая существующие строки
+local Players = game:GetService("Players")
+
+-- [EXISTING CODE PLACEHOLDER] — сюда вставляется твой исходный скрипт без изменений
+
+-- [NEW] Функция логирования (добавлено в конец файла)
+local logStore = {}
+
+local function logEvent(player, action, ok)
+  table.insert(logStore, { userId = player.UserId, action = action, ok = ok, ts = os.time() })
+end
+
+-- [NEW] Точка интеграции (пример вызова)
+-- Пример: logEvent(player, "OpenDoor", true)
+-- Вызовы добавляются только как +строки, без удаления старых`;
+
+        tests =
+`Roblox чек-лист:
+- Существующий функционал работает без изменений.
+- Новая функция вызывается в нужных местах (плюс-строки).
+- Лог фиксируется: userId, action, ok, ts.
+- Никаких удалённых или сокращённых строк.`;
+
+        instr =
+`Инструкции:
+1) Вставь свой исходный скрипт на место [EXISTING CODE PLACEHOLDER].
+2) Добавь блок [NEW] в конец файла.
+3) Расставь вызовы logEvent в нужных обработчиках (плюс-строки).
+4) Протестируй на владельце и не-владельце, если касается доступа.`;
+
+        diff =
+`Diff (патч):
++++ b/script.lua
+@@ добавлено @@
++ local logStore = {}
++ local function logEvent(player, action, ok) ... end
++ -- Вызовы logEvent(...) в нужных местах`;
+      }
+
+      if (mode === "web") {
+        code =
+`<!-- Web (HTML/CSS/JS) скелет для расширения -->
+<!-- [EXISTING CODE PLACEHOLDER] — сюда идёт твой текущий HTML/JS без изменений -->
+
+<!-- [NEW] Модуль: logger.js (добавить как новый файл или блок) -->
+<script>
+window.AngelLog = (function(){
+  const store = [];
+  function log(action, ok, detail){
+    store.push({ action, ok, detail, ts: Date.now() });
   }
-  // show next button
-  const nextBtn = document.createElement('div'); nextBtn.style.marginTop='12px';
-  nextBtn.innerHTML = `<button class="btn primary" id="nextBlockBtn">Далее</button>`;
-  area.appendChild(nextBtn);
-  $('nextBlockBtn').onclick = ()=> { session.lesson.blockIndex++; renderBlock(); };
-}
-
-/* Practice vocab: multiple choice */
-function practiceVocab(lesson){
-  const area = $('practiceVocabArea'); area.innerHTML = '';
-  const list = shuffle(lesson.vocab || []);
-  let i = 0, correct = 0;
-  function renderQ(){
-    if(i >= list.length){ alert(`Практика завершена. Правильных: ${correct}/${list.length}`); session.lesson.blockIndex++; renderBlock(); return; }
-    const w = list[i];
-    const opts = shuffle([w.ru, ...getRandomRu(lesson, 3)]);
-    area.innerHTML = `<div style="font-weight:900">${w.dan}</div><div class="small-muted" style="margin-top:8px">Выберите перевод</div>`;
-    opts.forEach(o=>{
-      const b = document.createElement('button'); b.className='option'; b.textContent = o; b.onclick = ()=>{
-        if(o === w.ru){ b.classList.add('correct'); correct++; recordSRS(w.id, 5); } else { b.classList.add('wrong'); recordSRS(w.id, 2); }
-        Array.from(area.querySelectorAll('.option')).forEach(x=>x.disabled=true);
-        setTimeout(()=>{ i++; renderQ(); }, 700);
-      };
-      area.appendChild(b);
-    });
-  }
-  renderQ();
-}
-
-/* Helper: get random ru translations from lesson or global */
-function getRandomRu(lesson, n){
-  const pool = (lesson.vocab || []).map(x=>x.ru).filter(Boolean);
-  const res = [];
-  while(res.length < n && pool.length){
-    const idx = Math.floor(Math.random()*pool.length);
-    res.push(pool.splice(idx,1)[0]);
-  }
-  // fallback common words
-  const fallback = ['спасибо','мама','дом','вода','хлеб','да'];
-  while(res.length < n) res.push(fallback[Math.floor(Math.random()*fallback.length)]);
-  return res;
-}
-
-/* Practice grammar: simple recognition (true/false) */
-function practiceGrammar(lesson){
-  const area = $('practiceGrammarArea'); area.innerHTML = '';
-  const examples = lesson.grammar.examples || [];
-  let i = 0, correct = 0;
-  function renderG(){
-    if(i >= examples.length){ alert(`Грамматика: ${correct}/${examples.length}`); session.lesson.blockIndex++; renderBlock(); return; }
-    const ex = examples[i];
-    area.innerHTML = `<div style="font-weight:900">${ex}</div><div class="small-muted" style="margin-top:8px">Это пример правила? (Да/Нет)</div>`;
-    const yes = document.createElement('button'); yes.className='option'; yes.textContent='Да'; yes.onclick = ()=>{ correct++; i++; renderG(); };
-    const no = document.createElement('button'); no.className='option'; no.textContent='Нет'; no.onclick = ()=>{ i++; renderG(); };
-    area.appendChild(yes); area.appendChild(no);
-  }
-  renderG();
-}
-
-/* Sentence building (drag & drop simplified) */
-function practiceSentence(lesson){
-  const area = $('sentenceArea'); area.innerHTML = '';
-  const sent = (lesson.sentences && lesson.sentences[0]) || 'Tak for i dag';
-  const parts = sent.split(' ');
-  const shuffled = shuffle(parts.slice());
-  area.innerHTML = `<div class="dragArea" id="dropArea"></div><div style="margin-top:8px" id="chipsArea"></div><div style="margin-top:8px"><button class="btn ghost" id="checkSentBtn">Проверить</button></div>`;
-  const chips = $('chipsArea'), drop = $('dropArea');
-  shuffled.forEach(p=>{ const c = document.createElement('div'); c.className='chip'; c.textContent = p; c.draggable = true; c.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', p); }); chips.appendChild(c); });
-  drop.addEventListener('dragover', e=>e.preventDefault());
-  drop.addEventListener('drop', e=>{ e.preventDefault(); const t = e.dataTransfer.getData('text/plain'); const node = Array.from(chips.children).find(x=>x.textContent===t); if(node) drop.appendChild(node); });
-  $('checkSentBtn').onclick = ()=>{ const assembled = Array.from(drop.children).map(x=>x.textContent).join(' '); if(assembled.trim() === parts.join(' ').trim()){ alert('Правильно!'); addPoints(10); } else { alert(`Неправильно. Собрано: "${assembled}"`); addPoints(2); } session.lesson.blockIndex++; renderBlock(); };
-}
-
-/* Quiz */
-function practiceQuiz(lesson){
-  const area = $('quizArea'); area.innerHTML = '';
-  const qset = lesson.quiz || [];
-  let i = 0, correct = 0;
-  function renderQ(){
-    if(i >= qset.length){
-      const pct = Math.round((correct / qset.length) * 100);
-      alert(`Квиз завершён. Правильных: ${correct}/${qset.length} (${pct}%)`);
-      // check pass threshold 70%
-      if(pct >= 70) { markLessonPassed(true); } else { markLessonPassed(false); }
-      session.lesson.blockIndex++; renderBlock();
-      return;
-    }
-    const q = qset[i];
-    area.innerHTML = `<div style="font-weight:900">${q.q}</div>`;
-    q.opts.forEach((opt, idx)=>{
-      const b = document.createElement('button'); b.className='option'; b.textContent = opt; b.onclick = ()=>{
-        if(idx === q.a){ b.classList.add('correct'); correct++; } else { b.classList.add('wrong'); }
-        Array.from(area.querySelectorAll('.option')).forEach(x=>x.disabled=true);
-        setTimeout(()=>{ i++; renderQ(); }, 700);
-      };
-      area.appendChild(b);
-    });
-  }
-  renderQ();
-}
-
-/* Review: show due SRS items */
-function practiceReview(){
-  const area = $('reviewArea'); area.innerHTML = '';
-  const cur = localStorage.getItem(KEY_CURRENT); if(!cur){ area.textContent='Войдите, чтобы повторять'; return; }
-  const prog = loadProgress(); const user = prog[cur];
-  const due = [];
-  for(const id in user.srs || {}){
-    const it = user.srs[id];
-    if(it.nextReview && it.nextReview <= now()) due.push(it);
-  }
-  if(due.length === 0){ area.textContent = 'Повторений нет'; session.lesson.blockIndex++; renderBlock(); return; }
-  let i = 0;
-  function renderDue(){
-    if(i >= due.length){ alert('Повторения завершены'); session.lesson.blockIndex++; renderBlock(); return; }
-    const it = due[i];
-    area.innerHTML = `<div style="font-weight:900">${it.dan}</div><div class="small-muted">${it.ru}</div><div style="margin-top:8px"><button class="btn ghost" id="revGood">Я помню</button><button class="btn ghost" id="revBad">Не помню</button></div>`;
-    $('revGood').onclick = ()=>{ sm2_update(it, 5); saveProgress(prog); i++; renderDue(); };
-    $('revBad').onclick = ()=>{ sm2_update(it, 2); saveProgress(prog); i++; renderDue(); };
-  }
-  renderDue();
-}
-
-/* Record SRS for a vocab id */
-function recordSRS(wordId, quality){
-  const cur = localStorage.getItem(KEY_CURRENT); if(!cur) return;
-  const prog = loadProgress(); if(!prog[cur]) prog[cur] = { level:'A1', points:0, completed:{}, srs:{}, currentLessonIndex:0 };
-  const user = prog[cur];
-  if(!user.srs[wordId]) {
-    // find word in lessons
-    let found = null;
-    for(const ls of lessons){ const w = (ls.vocab||[]).find(x=>x.id===wordId); if(w){ found = { dan:w.dan, ru:w.ru }; break; } }
-    user.srs[wordId] = { id: wordId, dan: found ? found.dan : wordId, ru: found ? found.ru : '', ef:2.5, repetitions:0, interval:0, nextReview: now() };
-  }
-  sm2_update(user.srs[wordId], quality);
-  saveProgress(prog);
-}
-
-/* Mark lesson passed and unlock next */
-function markLessonPassed(passed){
-  const cur = localStorage.getItem(KEY_CURRENT); if(!cur) return;
-  const prog = loadProgress(); const user = prog[cur];
-  const idx = user.currentLessonIndex || 0;
-  if(passed){
-    user.completed = user.completed || {};
-    user.completed[lessons[idx].id] = true;
-    user.points = (user.points || 0) + 20;
-    // unlock next
-    user.currentLessonIndex = Math.min(lessons.length - 1, idx + 1);
-    saveProgress(prog);
-    renderProfile();
-    alert('Урок зачтён. Следующий урок разблокирован.');
-  } else {
-    alert('Вы не набрали проходной балл. Система предложит дополнительные повторения.');
-    // schedule extra repeats: mark some vocab items with low ef for immediate review
-    const low = (lessons[idx].vocab || []).slice(0,2);
-    low.forEach(w => {
-      recordSRS(w.id, 2);
-    });
-  }
-}
-
-/* Complete lesson block */
-function completeLesson(){
-  const area = $('completeArea'); area.innerHTML = '';
-  const cur = localStorage.getItem(KEY_CURRENT); if(!cur) return;
-  const prog = loadProgress(); const user = prog[cur];
-  const idx = session.lesson.idx;
-  const lesson = lessons[idx];
-  user.completed = user.completed || {};
-  user.completed[lesson.id] = true;
-  user.points = (user.points || 0) + 10;
-  // unlock next lesson
-  user.currentLessonIndex = Math.min(lessons.length - 1, idx + 1);
-  saveProgress(prog);
-  renderProfile(); renderLessonsList();
-  area.innerHTML = `<div>Урок "${lesson.title}" завершён. +10 очков</div><div style="margin-top:8px"><button class="btn primary" id="finishBtn">Продолжить</button></div>`;
-  $('finishBtn').onclick = ()=>{ session.lesson = null; $('startLessonBtn').style.display = 'inline-block'; $('nextAutoBtn').style.display = 'none'; $('blockArea').innerHTML = ''; $('flowTitle').textContent = 'Готово к началу'; $('flowSubtitle').textContent = 'Нажмите «Начать урок»'; };
-}
-
-/* Render profile and progress */
-function renderProfile(){
-  const cur = localStorage.getItem(KEY_CURRENT);
-  const prog = loadProgress();
-  if(cur && prog[cur]){
-    $('userName').textContent = cur;
-    $('userLevel').textContent = `Уровень: ${prog[cur].level || 'A1'}`;
-    $('points').textContent = prog[cur].points || 0;
-    $('avatar').textContent = cur[0].toUpperCase();
-    // due count
-    const due = Object.values(prog[cur].srs || {}).filter(it => it.nextReview && it.nextReview <= now()).length;
-    $('dueCount').textContent = due;
-    // current lesson title
-    const idx = prog[cur].currentLessonIndex || 0;
-    $('currentLessonTitle').textContent = lessons[idx] ? lessons[idx].title : '—';
-    // lesson progress text (simple)
-    $('lessonProgressText').textContent = `Урок ${idx+1} из ${lessons.length}`;
-    $('lessonProgress').style.width = `${Math.round((idx/lessons.length)*100)}%`;
-  } else {
-    $('userName').textContent = 'Гость';
-    $('userLevel').textContent = 'Уровень: —';
-    $('points').textContent = '0';
-    $('avatar').textContent = 'Ж';
-    $('dueCount').textContent = '0';
-    $('currentLessonTitle').textContent = '—';
-    $('lessonProgressText').textContent = '0 / 0';
-    $('lessonProgress').style.width = '0%';
-  }
-}
-
-/* TTS */
-let voices = [];
-function populateVoices(){
-  voices = speechSynthesis.getVoices();
-  const sel = $('voiceSelect'); sel.innerHTML = '';
-  voices.forEach(v=>{ const opt = document.createElement('option'); opt.value = v.name; opt.textContent = `${v.name} — ${v.lang}`; sel.appendChild(opt); });
-}
-speechSynthesis.onvoiceschanged = populateVoices;
-populateVoices();
-function speak(text){
-  if(!('speechSynthesis' in window)) return alert('TTS не поддерживается в этом браузере');
-  const u = new SpeechSynthesisUtterance(text);
-  const sel = $('voiceSelect').value;
-  const v = voices.find(x=>x.name === sel);
-  if(v) u.voice = v;
-  u.rate = 1;
-  speechSynthesis.speak(u);
-}
-$('speakBtn').onclick = ()=> speak('Hej! Velkommen til dansk med Zhenya.');
-$('stopSpeakBtn').onclick = ()=> speechSynthesis.cancel();
-
-/* Start / Next block controls */
-$('startLessonBtn').onclick = ()=> {
-  const cur = localStorage.getItem(KEY_CURRENT);
-  if(!cur) return alert('Войдите или зарегистрируйтесь');
-  startLessonFlow();
-};
-$('nextAutoBtn').onclick = ()=> {
-  if(session.lesson){ session.lesson.blockIndex++; renderBlock(); }
-};
-
-/* Export user data */
-$('btnExport').onclick = ()=> {
-  const cur = localStorage.getItem(KEY_CURRENT);
-  if(!cur) return alert('Войдите, чтобы экспортировать прогресс');
-  const prog = loadProgress();
-  const data = { user: cur, progress: prog[cur], lessons };
-  const txt = JSON.stringify(data, null, 2);
-  navigator.clipboard.writeText(txt).then(()=> alert('Данные скопированы в буфер обмена'));
-};
-
-/* Render lessons list and profile on load */
-function renderAll(){
-  renderAuth();
-  renderLessonsList();
-  renderProfile();
-}
-renderAll();
-
-/* Initial guidance */
-$('assistantMsg').textContent = 'Система готова. Зарегистрируйтесь и начните первый урок — всё будет идти по очереди.';
-
-/* Expose closeModal for inline use */
-window.closeModal = closeModal;
-
-/* Utility: shuffle */
-function shuffle(arr){ return arr.map(a=>[Math.random(),a]).sort((a,b)=>a[0]-b[0]).map(a=>a[1]); }
-
-/* Simple addPoints helper */
-function addPoints(n){
-  const cur = localStorage.getItem(KEY_CURRENT); if(!cur) return;
-  const prog = loadProgress(); if(!prog[cur]) prog[cur] = { level:'A1', points:0, completed:{}, srs:{}, currentLessonIndex:0 };
-  prog[cur].points = (prog[cur].points || 0) + n; saveProgress(prog); renderProfile();
-}
-
+  function exportJSON(){ return JSON.stringify(store, null, 2); }
+  return { log, exportJSON };
+})();
 </script>
+
+<!-- [NEW] Пример интеграции -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Пример: AngelLog.log("subscribe", true, { email: "user@example.com" });
+});
+</script>`;
+
+        tests =
+`Web чек-лист:
+- Исходная страница работает как раньше.
+- AngelLog.log() добавляет записи (action, ok, detail, ts).
+- exportJSON() возвращает корректный JSON.
+- Никаких удалений/сокращений исходного HTML/JS.`;
+
+        instr =
+`Инструкции:
+1) Не трогай текущие теги/скрипты — вставь новый блок [NEW] ниже.
+2) Подключи вызовы AngelLog.log() в нужные места (submit, click).
+3) Проверь, что функционал страницы не изменился, только расширился.`;
+
+        diff =
+`Diff (патч):
++++ b/index.html
+@@ добавлено @@
++ <script>window.AngelLog = (function(){ ... })();</script>
++ <script>document.addEventListener('DOMContentLoaded', () => { ... });</script>`;
+      }
+
+      return { spec: baseSpec, code, tests, instr, diff };
+    }
+
+    function fillPanels(payload) {
+      specEl.textContent = payload.spec || "// нет спеки";
+      codeEl.textContent = payload.code || "// нет кода";
+      testsEl.textContent = payload.tests || "// нет тестов";
+      instrEl.textContent = payload.instr || "// нет инструкций";
+      diffEl.textContent = payload.diff || "// нет diff";
+    }
+
+    runBtn.addEventListener('click', () => {
+      const mode = modeEl.value;
+      const policy = policyEl.value;
+      const prompt = promptEl.value.trim();
+
+      const data = generateContent(mode, policy, prompt);
+      fillPanels(data);
+
+      // Переключаемся на вкладку "Код"
+      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+      document.querySelector('[data-tab="code"]').classList.add('active');
+      Object.values(panels).forEach(p => p.hidden = true);
+      document.getElementById('panel-code').hidden = false;
+    });
+
+    clearBtn.addEventListener('click', () => {
+      promptEl.value = "";
+      fillPanels({ spec:"", code:"", tests:"", instr:"", diff:"" });
+      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+      document.querySelector('[data-tab="spec"]').classList.add('active');
+      Object.values(panels).forEach(p => p.hidden = true);
+      document.getElementById('panel-spec').hidden = false;
+    });
+  </script>
 </body>
 </html>
