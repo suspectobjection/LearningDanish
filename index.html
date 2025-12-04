@@ -2,583 +2,297 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
-  <title>Изучение датского языка с Женей — Полная версия</title>
+  <title>Изучение датского с Женей — Авто‑курс (A1→A2)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     :root{
-      --bg:#06121a;
-      --panel:#0f1b23;
-      --muted:#9fb0b8;
-      --text:#eaf6f5;
-      --accent:#00d4b4;
-      --accent2:#ff7a59;
-      --glass: rgba(255,255,255,0.04);
-      --success:#4ade80;
-      --danger:#ff6b6b;
-      --card:#0b1620;
-      --shadow: 0 10px 30px rgba(0,0,0,0.6);
-      --glass-2: rgba(255,255,255,0.02);
-      --font: "Segoe UI", Roboto, Arial, sans-serif;
+      --bg:#07121a; --card:#0f1b23; --muted:#9fb0b8; --text:#eaf6f5;
+      --accent:#00d4b4; --accent2:#ff7a59; --glass:rgba(255,255,255,0.04);
+      --success:#4ade80; --danger:#ff6b6b; --font: "Segoe UI", Roboto, Arial, sans-serif;
     }
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:var(--font);background:linear-gradient(180deg,#04101a,#06121a);color:var(--text);-webkit-font-smoothing:antialiased}
-    a{color:var(--accent)}
-    header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid var(--glass-2)}
-    h1{margin:0;font-size:20px;color:var(--accent);letter-spacing:0.2px}
+    html,body{height:100%;margin:0;font-family:var(--font);background:linear-gradient(180deg,#04101a,#07121a);color:var(--text)}
+    header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--glass)}
+    h1{margin:0;font-size:18px;color:var(--accent)}
     .subtitle{color:var(--muted);font-size:13px}
-    .container{max-width:1320px;margin:18px auto;padding:18px;display:grid;grid-template-columns:300px 1fr 360px;gap:18px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:14px;border:1px solid var(--glass);box-shadow:var(--shadow)}
-    .sidebar .profile{display:flex;gap:12px;align-items:center}
-    .avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#ffd166,#ff7a59);display:flex;align-items:center;justify-content:center;font-weight:900;color:#2b0a00;font-size:22px}
-    .userName{font-weight:900}
-    .userLevel{font-size:13px;color:var(--muted)}
-    .menu{display:flex;flex-direction:column;gap:8px;margin-top:12px}
-    .menu button{background:transparent;border:1px solid var(--glass);padding:10px;border-radius:10px;color:var(--text);cursor:pointer;font-weight:800}
-    .menu button.active{background:linear-gradient(90deg, rgba(0,212,180,0.12), rgba(255,122,89,0.06));border-color:rgba(0,212,180,0.18);box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+    .layout{max-width:1100px;margin:18px auto;display:grid;grid-template-columns:320px 1fr 320px;gap:16px;padding:0 12px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:14px;border:1px solid var(--glass)}
+    .profile{display:flex;gap:12px;align-items:center}
+    .avatar{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#ffd166,#ff7a59);display:flex;align-items:center;justify-content:center;font-weight:900;color:#2b0a00}
     .small{font-size:13px;color:var(--muted)}
-    .points{font-weight:900;font-size:20px;margin-top:8px}
-    .lessons{display:flex;flex-direction:column;gap:12px}
-    .lesson{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;background:var(--card);border:1px solid var(--glass-2);cursor:pointer;transition:transform .18s ease, box-shadow .18s ease}
-    .lesson:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,0.6)}
-    .lesson .meta{display:flex;flex-direction:column}
-    .lesson .title{font-weight:900}
-    .lesson .desc{font-size:13px;color:var(--muted)}
-    .startBtn{background:linear-gradient(90deg,var(--accent),var(--accent2));border:none;padding:8px 12px;border-radius:8px;color:#021;font-weight:900;cursor:pointer}
-    .assistant{display:flex;flex-direction:column;gap:12px}
-    .assistant .head{display:flex;gap:12px;align-items:center}
-    .assistant .char{width:72px;height:72px;border-radius:12px;background:linear-gradient(135deg,#ffb86b,#ff7a59);display:flex;align-items:center;justify-content:center;font-weight:900;color:#2b0a00;font-size:28px}
-    .assistant .msg{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;font-size:14px}
-    .progressBar{height:12px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden}
-    .progressFill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .6s ease}
-    .controls{display:flex;gap:8px;align-items:center}
-    .modalBack{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:9999}
-    .modal{width:980px;max-width:96%;background:linear-gradient(180deg,#07121a,#07101a);padding:18px;border-radius:12px;border:1px solid var(--glass);box-shadow:0 20px 60px rgba(0,0,0,0.7)}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
-    .cardItem{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);text-align:center;cursor:pointer;transition:transform .12s ease}
-    .cardItem:hover{transform:translateY(-6px)}
-    .correct{outline:3px solid rgba(74,222,128,0.18);box-shadow:0 8px 30px rgba(74,222,128,0.06)}
-    .wrong{outline:3px solid rgba(255,107,107,0.12);box-shadow:0 8px 30px rgba(255,107,107,0.04)}
-    .dragArea{min-height:60px;border:2px dashed rgba(255,255,255,0.03);border-radius:8px;padding:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .chip{padding:8px 10px;border-radius:999px;background:#0b1220;border:1px solid rgba(255,255,255,0.03);cursor:grab}
-    .chip.dragging{opacity:0.5;transform:scale(1.02)}
     .btn{padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:800}
     .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#021}
     .btn.ghost{background:transparent;border:1px solid var(--glass);color:var(--text)}
-    .fadeIn{animation:fadeIn .36s ease}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-    .pulse{animation:pulse 1.6s infinite}
-    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+    .lessonItem{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;background:rgba(255,255,255,0.01);margin-top:8px}
+    .locked{opacity:0.45}
+    .progressBar{height:12px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden;margin-top:8px}
+    .progressFill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .6s ease}
+    .centerCard{min-height:420px}
+    .modalBack{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:9999}
+    .modal{width:920px;max-width:96%;background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--glass)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .vocabRow{display:flex;justify-content:space-between;padding:8px;border-radius:8px;background:rgba(255,255,255,0.01);margin-top:6px}
+    .chip{padding:8px 10px;border-radius:999px;background:#0b1220;border:1px solid rgba(255,255,255,0.03);cursor:grab;margin:6px}
+    .dragArea{min-height:60px;border:2px dashed rgba(255,255,255,0.03);border-radius:8px;padding:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .option{padding:10px;border-radius:8px;background:#0b1112;border:1px solid rgba(255,255,255,0.02);cursor:pointer;margin-top:8px}
+    .correct{outline:3px solid rgba(74,222,128,0.18)}
+    .wrong{outline:3px solid rgba(255,107,107,0.12)}
     .small-muted{font-size:12px;color:var(--muted)}
-    footer{grid-column:1/-1;text-align:center;color:var(--muted);margin-top:18px;font-size:13px}
-    /* responsive */
-    @media (max-width:1100px){ .container{grid-template-columns:1fr; padding:12px} .assistant{order:3} .sidebar{order:1} main{order:2} }
+    @media (max-width:1000px){ .layout{grid-template-columns:1fr; padding:0 12px} .avatar{width:48px;height:48px} }
   </style>
 </head>
 <body>
   <header>
     <div>
-      <h1>Изучение датского языка с Женей</h1>
-      <div class="subtitle">Lær dansk med Zhenya — интерактивно • уровни A1 A2 • локально</div>
+      <h1>Изучение датского с Женей — Авто‑курс</h1>
+      <div class="subtitle">Линейный путь: уроки идут по очереди, SRS, грамматика, тесты</div>
     </div>
-    <div style="display:flex;gap:12px;align-items:center">
-      <div id="welcomeText" class="small-muted">Velkommen — добро пожаловать</div>
-      <div id="authArea"></div>
-    </div>
+    <div id="authArea"></div>
   </header>
 
-  <div class="container">
-    <!-- Sidebar -->
-    <aside class="sidebar card">
+  <div class="layout">
+    <!-- Left: profile & progress -->
+    <aside class="card">
       <div class="profile">
         <div class="avatar" id="avatar">Ж</div>
         <div>
-          <div class="userName" id="userName">Гость</div>
-          <div class="userLevel" id="userLevel">Niveau: —</div>
+          <div style="font-weight:900" id="userName">Гость</div>
+          <div class="small" id="userLevel">Уровень: —</div>
         </div>
-      </div>
-
-      <div class="menu">
-        <button class="active" data-view="lessons">Lektioner / Уроки</button>
-        <button data-view="practice">Øvelser / Практика</button>
-        <button data-view="profile">Profil</button>
-        <button data-view="games">Spil / Игры</button>
-      </div>
-
-      <div style="margin-top:14px">
-        <div class="small">Очки</div>
-        <div class="points" id="points">0</div>
-        <div class="small-muted" style="margin-top:8px">Прогресс и достижения сохраняются локально в браузере</div>
       </div>
 
       <div style="margin-top:12px">
-        <div class="small">Быстрые действия</div>
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <button class="btn ghost" id="btnPractice">Практика</button>
-          <button class="btn ghost" id="btnGames">Игры</button>
-        </div>
+        <div class="small">Текущий урок</div>
+        <div style="font-weight:900;margin-top:6px" id="currentLessonTitle">—</div>
+        <div class="progressBar"><div class="progressFill" id="lessonProgress" style="width:0%"></div></div>
+        <div class="small-muted" id="lessonProgressText">0 / 0</div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="small">Очки</div>
+        <div style="font-weight:900;font-size:20px;margin-top:6px" id="points">0</div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="small">Повторения сегодня</div>
+        <div id="dueCount" style="font-weight:800;margin-top:6px">0</div>
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button class="btn ghost" id="btnProfile">Профиль</button>
+        <button class="btn ghost" id="btnExport">Экспорт</button>
       </div>
     </aside>
 
-    <!-- Main content -->
-    <main>
-      <div class="card">
-        <h2>Уроки — полный набор</h2>
-        <div class="small-muted">Выберите урок по уровню A1 или A2. Каждый урок содержит словарь, упражнения и тесты.</div>
+    <!-- Center: lesson flow -->
+    <main class="card centerCard">
+      <div id="flowArea">
+        <h2 id="flowTitle">Готово к началу</h2>
+        <div class="small-muted" id="flowSubtitle">Нажмите «Начать урок», и система сама поведёт вас по блокам</div>
 
-        <div style="margin-top:12px" id="lessonsList" class="lessons"></div>
-      </div>
-
-      <div class="card" style="margin-top:12px">
-        <h2>Проверка знаний перед уроком</h2>
-        <div class="small-muted">Короткий тест для адаптации уровня и рекомендаций</div>
         <div style="margin-top:12px">
-          <button class="btn primary" id="startPrecheck">Начать проверку</button>
-          <button class="btn ghost" id="importData">Импорт уроков</button>
-          <button class="btn ghost" id="exportData">Экспорт уроков</button>
+          <button class="btn primary" id="startLessonBtn">Начать урок</button>
+          <button class="btn ghost" id="nextAutoBtn" style="display:none">Следующий блок</button>
         </div>
+
+        <div id="blockArea" style="margin-top:14px"></div>
       </div>
 
-      <div class="card" style="margin-top:12px">
-        <h2>Поиск и быстрый доступ</h2>
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <input id="searchInput" placeholder="Поиск по урокам или словам" style="flex:1;padding:8px;border-radius:8px;border:1px solid var(--glass);background:transparent;color:var(--text)">
-          <button class="btn ghost" id="searchBtn">Найти</button>
-        </div>
-        <div id="searchResults" style="margin-top:12px"></div>
+      <div id="lessonListArea" style="margin-top:18px">
+        <h3>Список уроков (линейно)</h3>
+        <div id="lessonsContainer"></div>
       </div>
     </main>
 
-    <!-- Assistant and progress -->
-    <aside class="assistant card">
-      <div class="head">
-        <div class="char">Ж</div>
+    <!-- Right: assistant & controls -->
+    <aside class="card">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="avatar" style="width:48px;height:48px;background:linear-gradient(135deg,#00d4b4,#06b6d4);font-size:18px">Ж</div>
         <div>
-          <div style="font-weight:900">Женя — din hjælper</div>
-          <div class="small-muted">Я помогу с произношением, исправлю ошибки и подскажу</div>
+          <div style="font-weight:900">Женя — помощник</div>
+          <div class="small-muted">Я веду тебя по курсу, повторяю слабые слова и объясняю грамматику</div>
         </div>
       </div>
 
-      <div class="msg" id="assistantMsg">Привет! Выбери урок, и я помогу тебе пройти его.</div>
+      <div style="margin-top:12px" id="assistantMsg">Выбери «Начать урок», чтобы начать.</div>
 
-      <div>
-        <div class="small">Прогресс уровня</div>
-        <div class="progressBar"><div class="progressFill" id="progressFill" style="width:0%"></div></div>
-        <div class="small-muted" id="progressText">0 / 0</div>
+      <div style="margin-top:12px">
+        <div class="small">Голос (TTS)</div>
+        <select id="voiceSelect" style="width:100%;margin-top:8px;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass)"></select>
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <button class="btn ghost" id="speakBtn">Произнести</button>
+          <button class="btn ghost" id="stopSpeakBtn">Стоп</button>
+        </div>
       </div>
 
       <div style="margin-top:12px">
-        <div class="small">Голос и произношение</div>
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <select id="voiceSelect" style="flex:1;padding:8px;border-radius:8px;border:1px solid var(--glass);background:transparent;color:var(--text)"></select>
-          <button class="btn ghost" id="speakSample">Произнести</button>
-        </div>
-        <div style="margin-top:8px" class="small-muted">Используется Web Speech API. На мобильных устройствах качество зависит от браузера.</div>
-      </div>
-
-      <div style="margin-top:12px">
-        <div class="small">Мини‑игры</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
-          <button class="btn" id="openPom">Pomodoro</button>
-          <button class="btn" id="openTycoon">Tycoon</button>
-          <button class="btn" id="openCasino">Slots</button>
-        </div>
+        <div class="small">Настройки</div>
+        <div style="margin-top:8px" class="small-muted">Дневная цель (мин)</div>
+        <input id="dailyGoal" type="number" value="20" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);margin-top:6px">
       </div>
     </aside>
-
-    <footer>© 2025 Изучение датского языка с Женей — локальная демо‑версия</footer>
   </div>
 
   <!-- Modal -->
-  <div class="modalBack" id="modalBack">
-    <div class="modal" id="modal"></div>
-  </div>
+  <div class="modalBack" id="modalBack"><div class="modal" id="modal"></div></div>
 
 <script>
-/*
-  Полная клиентская платформа "Изучение датского языка с Женей"
-  - Регистрация / логин / пароли в localStorage (демо)
-  - Уроки A1 и A2 (много уроков)
-  - Упражнения: vocab, sentence, text, quiz
-  - TTS через Web Speech API
-  - Импорт/экспорт уроков JSON
-  - Простая система очков и прогресса
-  - Анимации и интерактивность
-*/
+/* =========================
+   Авто‑курс: последовательный движок + SRS (SM‑2) + UI
+   Хранение: localStorage
+   ========================= */
 
-/* ===== Storage keys ===== */
-const STORAGE_USERS = 'zhenya_users_v1';
-const STORAGE_CURRENT = 'zhenya_current_v1';
-const STORAGE_PROGRESS = 'zhenya_progress_v1';
-const STORAGE_LESSONS = 'zhenya_lessons_v1';
+/* Storage keys */
+const KEY_USERS = 'zhenya_users_v2';
+const KEY_CURRENT = 'zhenya_current_v2';
+const KEY_PROGRESS = 'zhenya_progress_v2';
+const KEY_LESSONS = 'zhenya_lessons_v2';
 
-/* ===== Helpers ===== */
-function loadJSON(key, fallback){
-  try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }
-  catch(e){ return fallback; }
+/* Utilities */
+const $ = id => document.getElementById(id);
+const now = () => Date.now();
+const daysMs = n => n * 24 * 60 * 60 * 1000;
+const saveJSON = (k,v) => localStorage.setItem(k, JSON.stringify(v));
+const loadJSON = (k, fallback) => { try { return JSON.parse(localStorage.getItem(k) || JSON.stringify(fallback)); } catch(e){ return fallback; } };
+
+/* SM-2 algorithm helpers */
+function sm2_update(item, quality){
+  // quality: 0..5
+  if(!item.ef) item.ef = 2.5;
+  if(!item.repetitions) item.repetitions = 0;
+  if(quality < 3){
+    item.repetitions = 0;
+    item.interval = 1;
+  } else {
+    item.repetitions += 1;
+    if(item.repetitions === 1) item.interval = 1;
+    else if(item.repetitions === 2) item.interval = 6;
+    else item.interval = Math.round(item.interval * item.ef);
+  }
+  item.ef = item.ef + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+  if(item.ef < 1.3) item.ef = 1.3;
+  item.nextReview = now() + item.interval * 24 * 60 * 60 * 1000;
+  if(!item.history) item.history = [];
+  item.history.push({ t: now(), q: quality });
+  return item;
 }
-function saveJSON(key, obj){ localStorage.setItem(key, JSON.stringify(obj)); }
-function b64(s){ return btoa(unescape(encodeURIComponent(s))); }
-function ub64(s){ try { return decodeURIComponent(escape(atob(s))); } catch(e){ return s; } }
-function el(id){ return document.getElementById(id); }
-function shuffle(arr){ return arr.map(a=>[Math.random(),a]).sort((a,b)=>a[0]-b[0]).map(a=>a[1]); }
 
-/* ===== Default lessons dataset (expanded) =====
-   We'll create many lessons across A1 and A2 with vocabulary, sentences and short texts.
-*/
+/* Default lessons (sample A1→A2 minimal set; scalable) */
 const DEFAULT_LESSONS = [
-  // A1 basics
-  { id:'a1-01', level:'A1', title:'Приветствия Hilsner', desc:'hej, godmorgen, farvel', vocab:[
-      {dan:'hej',ru:'привет'}, {dan:'godmorgen',ru:'доброе утро'}, {dan:'godnat',ru:'спокойной ночи'}, {dan:'farvel',ru:'до свидания'},
-      {dan:'tak',ru:'спасибо'}, {dan:'velbekomme',ru:'пожалуйста (в ответ на спасибо)'}
-    ], sentences:[
-      {dan:'Hej, hvordan har du det?', ru:'Привет, как дела?'},
-      {dan:'Godmorgen! Hvordan går det?', ru:'Доброе утро! Как идут дела?'}
-    ], text:{dan:'Hej! Jeg hedder Zhenya. Velkommen til dansk.', ru:'Привет! Меня зовут Женя. Добро пожаловать в датский.'}
+  { id:'a1-001', level:'A1', title:'Приветствия', desc:'hej, godmorgen, farvel', vocab:[
+      {id:'w1', dan:'hej', ru:'привет'}, {id:'w2', dan:'godmorgen', ru:'доброе утро'}, {id:'w3', dan:'farvel', ru:'до свидания'},
+      {id:'w4', dan:'tak', ru:'спасибо'}, {id:'w5', dan:'undskyld', ru:'извините'}
+    ],
+    grammar:{ id:'g1', title:'Личные местоимения', text:'jeg, du, han, hun — порядок слов в простом предложении', examples:['Jeg hedder Anna.','Du er velkommen.'] },
+    sentences:[ 'Hej, hvordan har du det?', 'Tak, det går godt.' ],
+    text:{ dan:'Hej! Jeg hedder Zhenya. Velkommen til dansk.', ru:'Привет! Меня зовут Женя. Добро пожаловать в датский.' },
+    quiz:[
+      { q:'Hvad betyder "hej"?', opts:['Привет','Пока','Спасибо'], a:0 },
+      { q:'Hvad betyder "tak"?', opts:['Спасибо','Пожалуйста','Извините'], a:0 }
+    ]
   },
-  { id:'a1-02', level:'A1', title:'Представление Præsentation', desc:'navn, alder, hvor kommer du fra', vocab:[
-      {dan:'jeg',ru:'я'}, {dan:'du',ru:'ты'}, {dan:'han',ru:'он'}, {dan:'hun',ru:'она'},
-      {dan:'navn',ru:'имя'}, {dan:'alder',ru:'возраст'}, {dan:'fra',ru:'из'}
-    ], sentences:[
-      {dan:'Jeg hedder Anna.', ru:'Меня зовут Анна.'},
-      {dan:'Hvor kommer du fra?', ru:'Откуда ты?'}
-    ], text:{dan:'Jeg kommer fra Danmark. Jeg er 25 år.', ru:'Я из Дании. Мне 25 лет.'}
+  { id:'a1-002', level:'A1', title:'Числа и возраст', desc:'en, to, tre, alder', vocab:[
+      {id:'w6', dan:'en', ru:'один'}, {id:'w7', dan:'to', ru:'два'}, {id:'w8', dan:'tre', ru:'три'}, {id:'w9', dan:'alder', ru:'возраст'}
+    ],
+    grammar:{ id:'g2', title:'Глагол "at være"', text:'быть — jeg er, du er, han er', examples:['Jeg er 30 år.','Du er sød.'] },
+    sentences:[ 'Jeg er 25 år gammel.', 'Hvor gammel er du?' ],
+    text:{ dan:'Tal er vigtige. En, to, tre.', ru:'Числа важны. Один, два, три.' },
+    quiz:[
+      { q:'Hvad betyder "to"?', opts:['Два','Три','Четыре'], a:0 },
+      { q:'Hvordan siger man "сколько лет"?', opts:['Hvor gammel','Hvad tid','Hvor meget'], a:0 }
+    ]
   },
-  { id:'a1-03', level:'A1', title:'Числа Tal', desc:'1-20, hvordan man siger alder', vocab:[
-      {dan:'en',ru:'один'}, {dan:'to',ru:'два'}, {dan:'tre',ru:'три'}, {dan:'fire',ru:'четыре'},
-      {dan:'fem',ru:'пять'}, {dan:'seks',ru:'шесть'}, {dan:'syv',ru:'семь'}, {dan:'otte',ru:'восемь'},
-      {dan:'ni',ru:'девять'}, {dan:'ti',ru:'десять'}
-    ], sentences:[
-      {dan:'Jeg er 30 år gammel.', ru:'Мне 30 лет.'},
-      {dan:'Hvad er dit telefonnummer?', ru:'Какой у тебя номер телефона?'}
-    ], text:{dan:'Tal er vigtige. En, to, tre, fire, fem.', ru:'Числа важны. Один, два, три, четыре, пять.'}
+  { id:'a1-003', level:'A1', title:'Семья', desc:'mor, far, søster, bror', vocab:[
+      {id:'w10', dan:'mor', ru:'мама'}, {id:'w11', dan:'far', ru:'папа'}, {id:'w12', dan:'søster', ru:'сестра'}
+    ],
+    grammar:{ id:'g3', title:'Притяжательные', text:'min, din, hans, hendes', examples:['Min mor er sød.','Din bog.'] },
+    sentences:[ 'Min far arbejder i byen.', 'Jeg har en søster.' ],
+    text:{ dan:'Familie er vigtig.', ru:'Семья важна.' },
+    quiz:[
+      { q:'Hvad betyder "mor"?', opts:['Мама','Папа','Сестра'], a:0 },
+      { q:'Hvad er "min"?', opts:['Мой','Твой','Его'], a:0 }
+    ]
   },
-  { id:'a1-04', level:'A1', title:'Семья Familie', desc:'mor, far, søskende', vocab:[
-      {dan:'mor',ru:'мама'}, {dan:'far',ru:'папа'}, {dan:'søster',ru:'сестра'}, {dan:'bror',ru:'брат'},
-      {dan:'familie',ru:'семья'}, {dan:'barn',ru:'ребенок'}
-    ], sentences:[
-      {dan:'Jeg har en søster.', ru:'У меня есть сестра.'},
-      {dan:'Min far arbejder i København.', ru:'Мой отец работает в Копенгагене.'}
-    ], text:{dan:'Familie er vigtig. Vi hjælper hinanden.', ru:'Семья важна. Мы помогаем друг другу.'}
-  },
-  { id:'a1-05', level:'A1', title:'Еда Mad', desc:'brød, mælk, kaffe', vocab:[
-      {dan:'brød',ru:'хлеб'}, {dan:'mælk',ru:'молоко'}, {dan:'kaffe',ru:'кофе'}, {dan:'te',ru:'чай'},
-      {dan:'vand',ru:'вода'}, {dan:'æble',ru:'яблоко'}
-    ], sentences:[
-      {dan:'Jeg vil gerne have en kop kaffe.', ru:'Я хотел бы чашку кофе.'},
-      {dan:'Har du mælk?', ru:'У тебя есть молоко?'}
-    ], text:{dan:'I Danmark drikker mange kaffe om morgenen.', ru:'В Дании многие пьют кофе по утрам.'}
-  },
-  // A1 daily routines
-  { id:'a1-06', level:'A1', title:'Дни недели Dage', desc:'mandag, tirsdag, onsdag', vocab:[
-      {dan:'mandag',ru:'понедельник'}, {dan:'tirsdag',ru:'вторник'}, {dan:'onsdag',ru:'среда'}, {dan:'torsdag',ru:'четверг'},
-      {dan:'fredag',ru:'пятница'}, {dan:'lørdag',ru:'суббота'}, {dan:'søndag',ru:'воскресенье'}
-    ], sentences:[
-      {dan:'I dag er det onsdag.', ru:'Сегодня среда.'},
-      {dan:'Hvad laver du i weekenden?', ru:'Что ты делаешь на выходных?'}
-    ], text:{dan:'Weekenden er til afslapning og familie.', ru:'Выходные для отдыха и семьи.'}
-  },
-  { id:'a1-07', level:'A1', title:'Время Tid', desc:'klokken, morgen, aften', vocab:[
-      {dan:'morgen',ru:'утро'}, {dan:'aften',ru:'вечер'}, {dan:'nat',ru:'ночь'}, {dan:'klokken',ru:'час'},
-      {dan:'time',ru:'час (единица)'}
-    ], sentences:[
-      {dan:'Klokken er otte.', ru:'Сейчас восемь часов.'},
-      {dan:'Jeg står op klokken syv.', ru:'Я встаю в семь часов.'}
-    ], text:{dan:'Tid er vigtig for planlægning.', ru:'Время важно для планирования.'}
-  },
-  { id:'a1-08', level:'A1', title:'Одежда Tøj', desc:'jakke, sko, bukser', vocab:[
-      {dan:'jakke',ru:'куртка'}, {dan:'sko',ru:'обувь'}, {dan:'bukser',ru:'штаны'}, {dan:'kjole',ru:'платье'},
-      {dan:'hat',ru:'шляпа'}
-    ], sentences:[
-      {dan:'Jeg har en rød jakke.', ru:'У меня красная куртка.'},
-      {dan:'Hvad har du på i dag?', ru:'Что ты сегодня носишь?'}
-    ], text:{dan:'Tøj beskytter os mod vejret.', ru:'Одежда защищает нас от погоды.'}
-  },
-  { id:'a1-09', level:'A1', title:'Погода Vejret', desc:'sol, regn, sne', vocab:[
-      {dan:'sol',ru:'солнце'}, {dan:'regn',ru:'дождь'}, {dan:'sne',ru:'снег'}, {dan:'blæst',ru:'ветер'},
-      {dan:'sky',ru:'облако'}
-    ], sentences:[
-      {dan:'Det er sol i dag.', ru:'Сегодня солнечно.'},
-      {dan:'Det regner udenfor.', ru:'На улице идет дождь.'}
-    ], text:{dan:'Vejret kan ændre sig hurtigt i Danmark.', ru:'Погода в Дании может быстро меняться.'}
-  },
-  { id:'a1-10', level:'A1', title:'Транспорт Transport', desc:'bus, tog, cykel', vocab:[
-      {dan:'bus',ru:'автобус'}, {dan:'tog',ru:'поезд'}, {dan:'cykel',ru:'велосипед'}, {dan:'bil',ru:'машина'},
-      {dan:'station',ru:'станция'}
-    ], sentences:[
-      {dan:'Jeg tager toget til arbejde.', ru:'Я еду на работу на поезде.'},
-      {dan:'Hvor er busstoppestedet?', ru:'Где автобусная остановка?'}
-    ], text:{dan:'Mange i Danmark cykler til arbejde.', ru:'Многие в Дании ездят на работу на велосипеде.'}
-  },
-
-  // A2 intermediate lessons (more vocabulary, grammar, dialogues)
-  { id:'a2-01', level:'A2', title:'Работа og Karriere', desc:'job, interview, CV', vocab:[
-      {dan:'job',ru:'работа'}, {dan:'ansættelse',ru:'прием на работу'}, {dan:'chef',ru:'начальник'}, {dan:'kollega',ru:'коллега'},
-      {dan:'CV',ru:'резюме'}
-    ], sentences:[
-      {dan:'Jeg søger et nyt job inden for IT.', ru:'Я ищу новую работу в IT.'},
-      {dan:'Hvordan var dit interview?', ru:'Как прошло твое собеседование?'}
-    ], text:{dan:'Arbejde fylder meget i vores hverdag.', ru:'Работа занимает много места в нашей повседневной жизни.'}
-  },
-  { id:'a2-02', level:'A2', title:'Здоровье Sundhed', desc:'læge, symptomer, apotek', vocab:[
-      {dan:'læge',ru:'врач'}, {dan:'syg',ru:'больной'}, {dan:'smerte',ru:'боль'}, {dan:'apotek',ru:'аптека'},
-      {dan:'medicin',ru:'лекарство'}
-    ], sentences:[
-      {dan:'Jeg har ondt i halsen.', ru:'У меня болит горло.'},
-      {dan:'Skal jeg tage medicin?', ru:'Мне нужно принять лекарство?'}
-    ], text:{dan:'Sundhed er vigtigt. Gå til lægen ved behov.', ru:'Здоровье важно. Обращайтесь к врачу при необходимости.'}
-  },
-  { id:'a2-03', level:'A2', title:'Покупки og Service', desc:'bestille, reklamation, betaling', vocab:[
-      {dan:'købe',ru:'покупать'}, {dan:'bestille',ru:'заказывать'}, {dan:'reklamation',ru:'жалоба'}, {dan:'betaling',ru:'оплата'},
-      {dan:'kvittering',ru:'чек'}
-    ], sentences:[
-      {dan:'Jeg vil gerne reklamere over dette produkt.', ru:'Я хотел бы пожаловаться на этот товар.'},
-      {dan:'Kan jeg betale med kort?', ru:'Могу ли я оплатить картой?'}
-    ], text:{dan:'God kundeservice er vigtig i butikker.', ru:'Хорошее обслуживание клиентов важно в магазинах.'}
-  },
-  { id:'a2-04', level:'A2', title:'Образование Uddannelse', desc:'skole, kursus, eksamen', vocab:[
-      {dan:'skole',ru:'школа'}, {dan:'kursus',ru:'курс'}, {dan:'eksamen',ru:'экзамен'}, {dan:'lærer',ru:'учитель'},
-      {dan:'studerende',ru:'студент'}
-    ], sentences:[
-      {dan:'Jeg tager et kursus i dansk.', ru:'Я прохожу курс по датскому.'},
-      {dan:'Hvornår er eksamen?', ru:'Когда экзамен?'}
-    ], text:{dan:'Uddannelse åbner døre til nye muligheder.', ru:'Образование открывает двери к новым возможностям.'}
-  },
-  { id:'a2-05', level:'A2', title:'Культура og Fritid', desc:'film, musik, sport', vocab:[
-      {dan:'film',ru:'фильм'}, {dan:'musik',ru:'музыка'}, {dan:'sport',ru:'спорт'}, {dan:'teater',ru:'театр'},
-      {dan:'festival',ru:'фестиваль'}
-    ], sentences:[
-      {dan:'Jeg går i biografen i weekenden.', ru:'Я иду в кино на выходных.'},
-      {dan:'Hvilken slags musik kan du lide?', ru:'Какую музыку ты любишь?'}
-    ], text:{dan:'Kultur beriger vores liv og skaber fællesskab.', ru:'Культура обогащает нашу жизнь и создает сообщество.'}
-  },
-
-  // Additional A1 lessons to expand dataset
-  { id:'a1-11', level:'A1', title:'Эмоции Følelser', desc:'glad, trist, bange', vocab:[
-      {dan:'glad',ru:'радостный'}, {dan:'trist',ru:'грустный'}, {dan:'bange',ru:'испуганный'}, {dan:'sur',ru:'сердитый'}
-    ], sentences:[
-      {dan:'Jeg er glad i dag.', ru:'Я сегодня рад.'},
-      {dan:'Hun er lidt trist.', ru:'Она немного грустная.'}
-    ], text:{dan:'Følelser er en del af livet.', ru:'Эмоции — часть жизни.'}
-  },
-  { id:'a1-12', level:'A1', title:'Дом Hjem', desc:'hus, lejlighed, værelse', vocab:[
-      {dan:'hus',ru:'дом'}, {dan:'lejlighed',ru:'квартира'}, {dan:'værelse',ru:'комната'}, {dan:'køkken',ru:'кухня'}
-    ], sentences:[
-      {dan:'Jeg bor i en lejlighed.', ru:'Я живу в квартире.'},
-      {dan:'Mit værelse er lille men hyggeligt.', ru:'Моя комната маленькая, но уютная.'}
-    ], text:{dan:'Hjemmet er et sted for ro.', ru:'Дом — место покоя.'}
-  },
-  { id:'a1-13', level:'A1', title:'Здоровый образ жизни Sund livsstil', desc:'motion, kost, søvn', vocab:[
-      {dan:'motion',ru:'физические упражнения'}, {dan:'kost',ru:'питание'}, {dan:'søvn',ru:'сон'}, {dan:'sund',ru:'здоровый'}
-    ], sentences:[
-      {dan:'Jeg går en tur hver dag.', ru:'Я гуляю каждый день.'},
-      {dan:'Søvn er vigtig for helbredet.', ru:'Сон важен для здоровья.'}
-    ], text:{dan:'Sund livsstil hjælper med energi og velvære.', ru:'Здоровый образ жизни помогает с энергией и самочувствием.'}
-  },
-  { id:'a1-14', level:'A1', title:'Праздники Højtider', desc:'jul, påske, nytår', vocab:[
-      {dan:'jul',ru:'Рождество'}, {dan:'påske',ru:'Пасха'}, {dan:'nytår',ru:'Новый год'}, {dan:'fest',ru:'праздник'}
-    ], sentences:[
-      {dan:'Vi fejrer jul med familien.', ru:'Мы празднуем Рождество с семьей.'},
-      {dan:'Godt nytår!', ru:'С Новым годом!'}
-    ], text:{dan:'Højtider bringer folk sammen.', ru:'Праздники объединяют людей.'}
-  },
-  { id:'a1-15', level:'A1', title:'Цвета Farver', desc:'rød, blå, grøn', vocab:[
-      {dan:'rød',ru:'красный'}, {dan:'blå',ru:'синий'}, {dan:'grøn',ru:'зеленый'}, {dan:'gul',ru:'желтый'}
-    ], sentences:[
-      {dan:'Min bil er rød.', ru:'Моя машина красная.'},
-      {dan:'Hvilken farve kan du lide?', ru:'Какой цвет тебе нравится?'}
-    ], text:{dan:'Farver gør verden smuk.', ru:'Цвета делают мир красивым.'}
-  },
-
-  // Additional A2 lessons to expand dataset
-  { id:'a2-06', level:'A2', title:'Miljø og Klima', desc:'bæredygtighed, genbrug', vocab:[
-      {dan:'miljø',ru:'окружающая среда'}, {dan:'klima',ru:'климат'}, {dan:'genbrug',ru:'переработка'}, {dan:'bæredygtig',ru:'устойчивый'}
-    ], sentences:[
-      {dan:'Vi skal passe på miljøet.', ru:'Мы должны заботиться об окружающей среде.'},
-      {dan:'Genbrug hjælper med at reducere affald.', ru:'Переработка помогает уменьшить отходы.'}
-    ], text:{dan:'Klimaændringer er en global udfordring.', ru:'Изменение климата — глобальная проблема.'}
-  },
-  { id:'a2-07', level:'A2', title:'Politik og Samfund', desc:'valg, demokrati, rettigheder', vocab:[
-      {dan:'valg',ru:'выборы'}, {dan:'demokrati',ru:'демократия'}, {dan:'lov',ru:'закон'}, {dan:'rettigheder',ru:'права'}
-    ], sentences:[
-      {dan:'Demokrati betyder folkestyre.', ru:'Демократия означает народовластие.'},
-      {dan:'Valg afholdes hvert fjerde år.', ru:'Выборы проводятся каждые четыре года.'}
-    ], text:{dan:'Samfundet bygger på regler og samarbejde.', ru:'Общество строится на правилах и сотрудничестве.'}
-  },
-  { id:'a2-08', level:'A2', title:'Teknologi og Internet', desc:'apps, sociale medier, sikkerhed', vocab:[
-      {dan:'teknologi',ru:'технология'}, {dan:'internet',ru:'интернет'}, {dan:'app',ru:'приложение'}, {dan:'sikkerhed',ru:'безопасность'}
-    ], sentences:[
-      {dan:'Jeg bruger sociale medier hver dag.', ru:'Я использую социальные сети каждый день.'},
-      {dan:'Sikkerhed online er vigtig.', ru:'Онлайн-безопасность важна.'}
-    ], text:{dan:'Teknologi ændrer måden vi lever på.', ru:'Технологии меняют наш образ жизни.'}
-  },
-  { id:'a2-09', level:'A2', title:'Bolig og Leje', desc:'husleje, kontrakt, boligmarked', vocab:[
-      {dan:'husleje',ru:'арендная плата'}, {dan:'kontrakt',ru:'договор'}, {dan:'bolig',ru:'жилье'}, {dan:'udlejer',ru:'арендодатель'}
-    ], sentences:[
-      {dan:'Lejekontrakten varer et år.', ru:'Договор аренды действует год.'},
-      {dan:'Boligmarkedet er konkurrencepræget.', ru:'Рынок жилья конкурентный.'}
-    ], text:{dan:'At finde bolig kan være svært i store byer.', ru:'Найти жилье может быть сложно в больших городах.'}
-  },
-  { id:'a2-10', level:'A2', title:'Madkultur og Opskrifter', desc:'traditionelle retter, opskrift', vocab:[
-      {dan:'opskrift',ru:'рецепт'}, {dan:'ret',ru:'блюдо'}, {dan:'ingredienser',ru:'ингредиенты'}, {dan:'krydderi',ru:'специя'}
-    ], sentences:[
-      {dan:'Denne opskrift kræver friske ingredienser.', ru:'Этот рецепт требует свежих ингредиентов.'},
-      {dan:'Hvad er din yndlingsret?', ru:'Какое твое любимое блюдо?'}
-    ], text:{dan:'Madkultur afspejler historie og traditioner.', ru:'Кулинарная культура отражает историю и традиции.'}
-  },
-
-  // Add more lessons to reach a substantial dataset
-  { id:'a1-16', level:'A1', title:'Здоровье og Følelser', desc:'sundhed, følelser', vocab:[
-    {dan:'sund',ru:'здоровый'},{dan:'træt',ru:'усталый'},{dan:'glad',ru:'радостный'},{dan:'bekymret',ru:'обеспокоенный'}
-  ], sentences:[{dan:'Jeg føler mig træt i dag.',ru:'Я чувствую себя усталым сегодня.'}], text:{dan:'At tale om følelser hjælper med forståelse.',ru:'Говорить об эмоциях помогает понять друг друга.'}},
-  { id:'a1-17', level:'A1', title:'Домашние дела Husarbejde', desc:'rengøring, madlavning', vocab:[
-    {dan:'rengøring',ru:'уборка'},{dan:'støvsuger',ru:'пылесос'},{dan:'vask',ru:'стирка'},{dan:'opvask',ru:'мытье посуды'}
-  ], sentences:[{dan:'Jeg skal gøre rent i dag.',ru:'Мне нужно сегодня убрать.'}], text:{dan:'Husarbejde er en del af hverdagen.',ru:'Домашние дела — часть повседневной жизни.'}},
-  { id:'a1-18', level:'A1', title:'Знакомства og Venner', desc:'møde nye mennesker', vocab:[
-    {dan:'ven',ru:'друг'},{dan:'møde',ru:'встреча'},{dan:'samtale',ru:'разговор'},{dan:'interesse',ru:'интерес'}
-  ], sentences:[{dan:'Det var rart at møde dig.',ru:'Было приятно познакомиться.'}], text:{dan:'Venskaber skabes gennem tid og tillid.',ru:'Дружба создается со временем и доверием.'}},
-  { id:'a1-19', level:'A1', title:'Покупки i supermarkedet', desc:'varer, kasse, tilbud', vocab:[
-    {dan:'varer',ru:'товары'},{dan:'kasse',ru:'касса'},{dan:'tilbud',ru:'акция'},{dan:'kurv',ru:'корзина'}
-  ], sentences:[{dan:'Hvor er kassen?',ru:'Где касса?'}], text:{dan:'Supermarkedet har mange forskellige varer.',ru:'В супермаркете много разных товаров.'}},
-  { id:'a1-20', level:'A1', title:'Телефон og Kommunikation', desc:'ringe, sms, e-mail', vocab:[
-    {dan:'ringe',ru:'звонить'},{dan:'sms',ru:'смс'},{dan:'e-mail',ru:'электронная почта'},{dan:'besked',ru:'сообщение'}
-  ], sentences:[{dan:'Kan jeg få dit nummer?',ru:'Можно получить твой номер?'}], text:{dan:'Kommunikation er vigtig i moderne liv.',ru:'Коммуникация важна в современной жизни.'}},
-
-  // A2 extra lessons
-  { id:'a2-11', level:'A2', title:'Arbejdsliv og Karriere', desc:'CV, interview, karriere', vocab:[
-    {dan:'karriere',ru:'карьера'},{dan:'erfaring',ru:'опыт'},{dan:'kompetence',ru:'компетенция'},{dan:'ansøgning',ru:'заявление'}
-  ], sentences:[{dan:'Jeg har erfaring med projektledelse.',ru:'У меня есть опыт управления проектами.'}], text:{dan:'At udvikle kompetencer hjælper karrieren.',ru:'Развитие навыков помогает карьере.'}},
-  { id:'a2-12', level:'A2', title:'Boligmarked og Leje', desc:'kontrakt, depositum', vocab:[
-    {dan:'depositum',ru:'залог'},{dan:'kontrakt',ru:'договор'},{dan:'udlejer',ru:'арендодатель'},{dan:'lejer',ru:'арендатор'}
-  ], sentences:[{dan:'Hvad er huslejen per måned?',ru:'Какая арендная плата в месяц?'}], text:{dan:'Boligmarkedet kan være udfordrende i storbyer.',ru:'Рынок жилья может быть сложным в больших городах.'}},
-  { id:'a2-13', level:'A2', title:'Sundhed og Lægebesøg', desc:'symptomer, recept', vocab:[
-    {dan:'symptom',ru:'симптом'},{dan:'recept',ru:'рецепт'},{dan:'undersøgelse',ru:'обследование'},{dan:'behandling',ru:'лечение'}
-  ], sentences:[{dan:'Lægen gav mig en recept.',ru:'Врач выписал мне рецепт.'}], text:{dan:'Sundhedssystemet hjælper med behandling og rådgivning.',ru:'Система здравоохранения помогает с лечением и консультациями.'}},
-  { id:'a2-14', level:'A2', title:'Transport og Rejser', desc:'billet, reservation, forsinkelse', vocab:[
-    {dan:'reservation',ru:'бронирование'},{dan:'forsinkelse',ru:'задержка'},{dan:'ankomst',ru:'прибытие'},{dan:'afgang',ru:'отправление'}
-  ], sentences:[{dan:'Mit tog er forsinket i dag.',ru:'Мой поезд сегодня задерживается.'}], text:{dan:'Planlæg din rejse og tjek tider i forvejen.',ru:'Планируй поездку и проверяй расписание заранее.'}},
-  { id:'a2-15', level:'A2', title:'Mad og Opskrifter', desc:'ingredienser, tilberedning', vocab:[
-    {dan:'tilberedning',ru:'приготовление'},{dan:'ingredienser',ru:'ингредиенты'},{dan:'portion',ru:'порция'},{dan:'smag',ru:'вкус'}
-  ], sentences:[{dan:'Skær grøntsagerne i små stykker.',ru:'Нарежь овощи на маленькие кусочки.'}], text:{dan:'Madlavning er både kunst og teknik.',ru:'Кулинария — это и искусство, и техника.'}},
-
-  // Add more lessons to reach a large dataset (total ~50 lessons)
+  // more lessons can be appended programmatically or via import
 ];
 
-// If no lessons saved in localStorage, initialize with DEFAULT_LESSONS
-let lessons = loadJSON(STORAGE_LESSONS, DEFAULT_LESSONS);
-saveJSON(STORAGE_LESSONS, lessons);
+/* Initialize lessons in storage if absent */
+let lessons = loadJSON(KEY_LESSONS, null);
+if(!lessons || !Array.isArray(lessons) || lessons.length === 0){
+  lessons = DEFAULT_LESSONS;
+  saveJSON(KEY_LESSONS, lessons);
+}
 
-/* ===== User management ===== */
-function loadUsers(){ return loadJSON(STORAGE_USERS, {}); }
-function saveUsers(u){ saveJSON(STORAGE_USERS, u); }
-function getCurrentUser(){ return localStorage.getItem(STORAGE_CURRENT) || null; }
-function setCurrentUser(u){ localStorage.setItem(STORAGE_CURRENT, u); renderAuthArea(); renderProfile(); renderLessons(); updateAssistant(`Привет, ${u}!`); }
-function clearCurrentUser(){ localStorage.removeItem(STORAGE_CURRENT); renderAuthArea(); renderProfile(); renderLessons(); updateAssistant('Вы вышли.'); }
+/* Users & progress */
+function loadUsers(){ return loadJSON(KEY_USERS, {}); }
+function saveUsers(u){ saveJSON(KEY_USERS, u); }
+function loadProgress(){ return loadJSON(KEY_PROGRESS, {}); }
+function saveProgress(p){ saveJSON(KEY_PROGRESS, p); }
 
-/* Progress structure: { username: { level:'A1', points:0, completed:{lessonId:true}, lessonProgress:{lessonId:{vocab:...,sentence:...}} } } */
-function loadProgress(){ return loadJSON(STORAGE_PROGRESS, {}); }
-function saveProgress(p){ saveJSON(STORAGE_PROGRESS, p); }
-
-/* ===== UI rendering ===== */
-const authArea = el('authArea');
-const lessonsList = el('lessonsList');
-const assistantMsg = el('assistantMsg');
-const pointsEl = el('points');
-const progressFill = el('progressFill');
-const progressText = el('progressText');
-const userNameEl = el('userName');
-const userLevelEl = el('userLevel');
-const avatarEl = el('avatar');
-
-function renderAuthArea(){
-  authArea.innerHTML = '';
-  const cur = getCurrentUser();
+/* Auth UI */
+function renderAuth(){
+  const cur = localStorage.getItem(KEY_CURRENT);
+  const area = $('authArea');
+  area.innerHTML = '';
   if(cur){
     const span = document.createElement('div'); span.className='small-muted'; span.textContent = cur;
-    const btn = document.createElement('button'); btn.className='btn ghost'; btn.textContent='Log ud'; btn.onclick = ()=>{ clearCurrentUser(); };
-    authArea.appendChild(span); authArea.appendChild(btn);
+    const btn = document.createElement('button'); btn.className='btn ghost'; btn.textContent='Выйти'; btn.onclick = ()=>{ localStorage.removeItem(KEY_CURRENT); renderAll(); };
+    area.appendChild(span); area.appendChild(btn);
   } else {
-    const loginBtn = document.createElement('button'); loginBtn.className='btn ghost'; loginBtn.textContent='Log ind'; loginBtn.onclick = showLogin;
-    const regBtn = document.createElement('button'); regBtn.className='btn primary'; regBtn.textContent='Registrer'; regBtn.onclick = showRegister;
-    authArea.appendChild(loginBtn); authArea.appendChild(regBtn);
+    const login = document.createElement('button'); login.className='btn ghost'; login.textContent='Войти'; login.onclick = showLogin;
+    const reg = document.createElement('button'); reg.className='btn primary'; reg.textContent='Регистрация'; reg.onclick = showRegister;
+    area.appendChild(login); area.appendChild(reg);
   }
 }
 
-function renderLessons(){
-  lessonsList.innerHTML = '';
-  const cur = getCurrentUser();
-  const prog = loadProgress();
-  const userLevel = cur && prog[cur] ? prog[cur].level : 'A1';
-  userLevelEl.textContent = `Niveau: ${userLevel}`;
-  userNameEl.textContent = cur || 'Гость';
-  avatarEl.textContent = cur ? cur[0].toUpperCase() : 'Ж';
-  // Show lessons grouped by level
-  const grouped = { 'A1':[], 'A2':[] };
-  lessons.forEach(l=>{ if(grouped[l.level]) grouped[l.level].push(l); });
-  // Render A1 then A2
-  ['A1','A2'].forEach(level=>{
-    const header = document.createElement('div'); header.className='small-muted'; header.style.marginTop='8px'; header.textContent = `Уровень ${level}`;
-    lessonsList.appendChild(header);
-    grouped[level].forEach(ls=>{
-      const elDiv = document.createElement('div'); elDiv.className='lesson fadeIn';
-      elDiv.innerHTML = `<div class="meta"><div class="title">${ls.title}</div><div class="desc">${ls.desc}</div></div><div><button class="startBtn">Start</button></div>`;
-      elDiv.querySelector('.startBtn').onclick = ()=> openLesson(ls.id);
-      lessonsList.appendChild(elDiv);
-    });
-  });
-}
+/* Modal helpers */
+function openModal(html){ $('modal').innerHTML = html; $('modalBack').style.display = 'flex'; }
+function closeModal(){ $('modalBack').style.display = 'none'; $('modal').innerHTML = ''; }
+$('modalBack').addEventListener('click', e => { if(e.target === $('modalBack')) closeModal(); });
 
-/* ===== Modal helpers ===== */
-const modalBack = el('modalBack');
-const modal = el('modal');
-function openModal(html){
-  modal.innerHTML = html;
-  modalBack.style.display = 'flex';
-}
-function closeModal(){ modalBack.style.display = 'none'; modal.innerHTML = ''; }
-modalBack.addEventListener('click', (e)=>{ if(e.target === modalBack) closeModal(); });
-
-/* ===== Authentication modals ===== */
+/* Registration & Login */
 function showRegister(){
   openModal(`
-    <h2>Registrer / Регистрация</h2>
+    <h2>Регистрация</h2>
     <div class="small-muted">Создайте локальный аккаунт</div>
     <div style="margin-top:12px">
       <label class="small-muted">Логин</label>
       <input id="regUser" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:var(--text)">
     </div>
-    <div style="margin-top:8px" class="row">
-      <div style="flex:1">
-        <label class="small-muted">Пароль</label>
-        <input id="regPass" type="password" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:var(--text)">
-      </div>
-      <div style="width:160px">
-        <label class="small-muted">Уровень</label>
-        <select id="regLevel" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:var(--text)">
-          <option value="A1">A1</option><option value="A2">A2</option>
-        </select>
-      </div>
+    <div style="margin-top:8px">
+      <label class="small-muted">Пароль</label>
+      <input id="regPass" type="password" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:var(--text)">
     </div>
-    <div class="btnRow" style="margin-top:12px">
+    <div style="margin-top:8px">
+      <label class="small-muted">Уровень</label>
+      <select id="regLevel" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:var(--text)">
+        <option value="A1">A1</option><option value="A2">A2</option>
+      </select>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
       <button class="btn ghost" id="regCancel">Отмена</button>
       <button class="btn primary" id="regSubmit">Зарегистрироваться</button>
     </div>
   `);
-  el('regCancel').onclick = closeModal;
-  el('regSubmit').onclick = ()=>{
-    const u = el('regUser').value.trim(); const p = el('regPass').value; const lvl = el('regLevel').value;
+  $('regCancel').onclick = closeModal;
+  $('regSubmit').onclick = ()=>{
+    const u = $('regUser').value.trim(); const p = $('regPass').value; const lvl = $('regLevel').value;
     if(!u || !p){ alert('Введите логин и пароль'); return; }
     const users = loadUsers();
     if(users[u]){ alert('Пользователь уже существует'); return; }
-    users[u] = { pass: b64(p), level: lvl, created: Date.now() };
+    users[u] = { pass: btoa(p), created: now() };
     saveUsers(users);
-    const prog = loadProgress(); prog[u] = { level: lvl, points: 0, completed: {}, lessonProgress: {} }; saveProgress(prog);
-    setCurrentUser(u); closeModal();
+    const prog = loadProgress();
+    prog[u] = { level: lvl, points: 0, completed: {}, srs: {} , currentLessonIndex: 0 };
+    saveProgress(prog);
+    localStorage.setItem(KEY_CURRENT, u);
+    closeModal(); renderAll();
   };
 }
 
 function showLogin(){
   openModal(`
-    <h2>Log ind / Вход</h2>
+    <h2>Вход</h2>
     <div class="small-muted">Введите логин и пароль</div>
     <div style="margin-top:12px">
       <label class="small-muted">Логин</label>
@@ -588,270 +302,392 @@ function showLogin(){
       <label class="small-muted">Пароль</label>
       <input id="logPass" type="password" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:var(--text)">
     </div>
-    <div class="btnRow" style="margin-top:12px">
+    <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
       <button class="btn ghost" id="logCancel">Отмена</button>
       <button class="btn primary" id="logSubmit">Войти</button>
     </div>
   `);
-  el('logCancel').onclick = closeModal;
-  el('logSubmit').onclick = ()=>{
-    const u = el('logUser').value.trim(); const p = el('logPass').value;
+  $('logCancel').onclick = closeModal;
+  $('logSubmit').onclick = ()=>{
+    const u = $('logUser').value.trim(); const p = $('logPass').value;
     const users = loadUsers();
     if(!users[u]){ alert('Пользователь не найден'); return; }
-    if(users[u].pass !== b64(p)){ alert('Неверный пароль'); return; }
-    setCurrentUser(u); closeModal();
+    if(users[u].pass !== btoa(p)){ alert('Неверный пароль'); return; }
+    localStorage.setItem(KEY_CURRENT, u);
+    closeModal(); renderAll();
   };
 }
 
-/* ===== Assistant and profile ===== */
-function updateAssistant(text){ assistantMsg.textContent = text; }
-function addPoints(n){
-  const cur = getCurrentUser(); if(!cur) return;
-  const prog = loadProgress(); if(!prog[cur]) prog[cur] = { level:'A1', points:0, completed:{}, lessonProgress:{} };
-  prog[cur].points = (prog[cur].points || 0) + n; saveProgress(prog); renderProfile();
-}
-function renderProfile(){
-  const cur = getCurrentUser(); const prog = loadProgress();
-  if(cur && prog[cur]){
-    pointsEl.textContent = prog[cur].points || 0;
-    const total = 200; const pct = Math.min(100, Math.round((prog[cur].points || 0)/total*100));
-    progressFill.style.width = pct + '%'; progressText.textContent = `${prog[cur].points || 0} / ${total}`;
-    userLevelEl.textContent = `Niveau: ${prog[cur].level || 'A1'}`; userNameEl.textContent = cur;
-    avatarEl.textContent = cur[0].toUpperCase();
-  } else {
-    pointsEl.textContent = '0'; progressFill.style.width = '0%'; progressText.textContent = '0 / 0';
-    userLevelEl.textContent = 'Niveau: —'; userNameEl.textContent = 'Гость'; avatarEl.textContent = 'Ж';
-  }
-}
-
-/* ===== Lesson opening and exercises ===== */
-function openLesson(lessonId){
-  const lesson = lessons.find(l=>l.id===lessonId);
-  if(!lesson) return;
-  openModal(`
-    <h2>${lesson.title}</h2>
-    <div class="small-muted">${lesson.desc}</div>
-    <div style="margin-top:12px;display:flex;gap:12px">
-      <div style="flex:1">
-        <div class="small-muted">Словарь</div>
-        <div style="margin-top:8px" id="vocabList"></div>
-      </div>
-      <div style="width:320px">
-        <div class="small-muted">Упражнения</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
-          <button class="btn ghost" data-ex="vocab">Сопоставление слов</button>
-          <button class="btn ghost" data-ex="sentence">Построение предложений</button>
-          <button class="btn ghost" data-ex="text">Текстовое понимание</button>
-          <button class="btn ghost" data-ex="quiz">Короткий квиз</button>
-        </div>
-      </div>
-    </div>
-    <div class="btnRow" style="margin-top:12px"><button class="btn ghost" id="closeLesson">Закрыть</button></div>
-  `);
-  const vocabList = el('vocabList');
-  vocabList.innerHTML = '';
-  (lesson.vocab || []).forEach(pair=>{
-    const d = document.createElement('div'); d.className='cardItem'; d.style.display='flex'; d.style.justifyContent='space-between';
-    d.innerHTML = `<div>${pair.dan}</div><div class="small-muted">${pair.ru}</div>`;
-    vocabList.appendChild(d);
+/* Render lessons list (linear, locked/unlocked) */
+function renderLessonsList(){
+  const container = $('lessonsContainer'); container.innerHTML = '';
+  const cur = localStorage.getItem(KEY_CURRENT);
+  const prog = loadProgress();
+  const userProg = cur && prog[cur] ? prog[cur] : null;
+  const currentIndex = userProg ? (userProg.currentLessonIndex || 0) : 0;
+  lessons.forEach((ls, idx) => {
+    const div = document.createElement('div'); div.className='lessonItem';
+    if(idx > currentIndex) div.classList.add('locked');
+    div.innerHTML = `<div><div style="font-weight:900">${ls.title}</div><div class="small-muted">${ls.desc}</div></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="small-muted">${ls.level}</div>
+        <button class="btn ghost" ${idx>currentIndex?'disabled':''} data-idx="${idx}">Открыть</button>
+      </div>`;
+    container.appendChild(div);
+    div.querySelector('button').onclick = ()=> {
+      if(idx > currentIndex){ alert('Этот урок заблокирован. Пройдите предыдущие уроки.'); return; }
+      // set current lesson index to idx and start
+      if(cur){
+        prog[cur].currentLessonIndex = idx; saveProgress(prog); renderAll(); startLessonFlow();
+      } else alert('Войдите, чтобы начать урок');
+    };
   });
-  modal.querySelectorAll('button[data-ex]').forEach(b=>{
-    b.onclick = ()=>{ const ex = b.getAttribute('data-ex'); closeModal(); startExercise(lessonId, ex); };
-  });
-  el('closeLesson').onclick = closeModal;
 }
 
-/* Exercise dispatch */
-function startExercise(lessonId, type){
-  const lesson = lessons.find(l=>l.id===lessonId);
-  if(!lesson) return;
-  updateAssistant(`Упражнение ${type} для урока "${lesson.title}"`);
-  if(type==='vocab') exerciseVocab(lesson);
-  else if(type==='sentence') exerciseSentence(lesson);
-  else if(type==='text') exerciseText(lesson);
-  else if(type==='quiz') exerciseQuiz(lesson);
+/* Engine: sequence of blocks for a lesson */
+const BLOCKS = ['intro','vocab_new','grammar','practice_vocab','practice_grammar','sentence','reading','quiz','review','complete'];
+
+function startLessonFlow(){
+  const cur = localStorage.getItem(KEY_CURRENT);
+  if(!cur){ alert('Войдите, чтобы начать'); return; }
+  const prog = loadProgress(); const user = prog[cur];
+  const idx = user.currentLessonIndex || 0;
+  const lesson = lessons[idx];
+  if(!lesson){ alert('Урок не найден'); return; }
+  // initialize lesson session state
+  session.lesson = { idx, lesson, blockIndex: 0, stats: { correct:0, total:0 } };
+  $('flowTitle').textContent = `Урок: ${lesson.title}`;
+  $('flowSubtitle').textContent = lesson.desc;
+  $('currentLessonTitle').textContent = lesson.title;
+  $('startLessonBtn').style.display = 'none';
+  $('nextAutoBtn').style.display = 'inline-block';
+  renderBlock();
 }
 
-/* Vocab matching exercise */
-function exerciseVocab(lesson){
-  const pairs = lesson.vocab && lesson.vocab.length ? lesson.vocab.slice() : [['hej','привет']];
-  // normalize to array of arrays
-  const list = pairs.map(p=> Array.isArray(p) ? p : [p.dan || p[0], p.ru || p[1]] );
-  const left = shuffle(list.map(p=>p[0]));
-  const right = shuffle(list.map(p=>p[1]));
-  openModal(`
-    <h2>Сопоставьте слова — ${lesson.title}</h2>
-    <div class="small-muted">Нажмите по словам слева и справа, чтобы отметить пары</div>
-    <div style="display:flex;gap:12px;margin-top:12px">
-      <div style="flex:1"><div class="small-muted">Danish</div><div id="leftCol" style="margin-top:8px"></div></div>
-      <div style="flex:1"><div class="small-muted">Русский</div><div id="rightCol" style="margin-top:8px"></div></div>
-    </div>
-    <div class="btnRow" style="margin-top:12px"><button class="btn ghost" id="cancelVocab">Отмена</button><button class="btn primary" id="checkVocab">Проверить</button></div>
-  `);
-  const leftCol = el('leftCol'), rightCol = el('rightCol');
-  left.forEach(w=>{ const d=document.createElement('div'); d.className='cardItem'; d.textContent=w; d.dataset.word=w; d.onclick=()=>d.classList.toggle('selected'); leftCol.appendChild(d); });
-  right.forEach(w=>{ const d=document.createElement('div'); d.className='cardItem'; d.textContent=w; d.dataset.word=w; d.onclick=()=>d.classList.toggle('selected'); rightCol.appendChild(d); });
-  el('cancelVocab').onclick = closeModal;
-  el('checkVocab').onclick = ()=>{
-    const selL = Array.from(leftCol.querySelectorAll('.cardItem.selected')).map(x=>x.dataset.word);
-    const selR = Array.from(rightCol.querySelectorAll('.cardItem.selected')).map(x=>x.dataset.word);
-    let correct = 0;
-    selL.forEach((l,i)=>{ const r = selR[i]; if(list.some(p=>p[0]===l && p[1]===r)) correct++; });
-    const points = Math.max(0, Math.round((correct / Math.max(1, selL.length)) * 10));
-    addPoints(points);
-    alert(`Правильных пар: ${correct}. +${points} очков`);
-    closeModal();
-  };
-}
-
-/* Sentence building drag & drop */
-function exerciseSentence(lesson){
-  const examples = lesson.sentences && lesson.sentences.length ? lesson.sentences : [{dan:'Tak for i dag', ru:'Спасибо за сегодня'}];
-  const item = examples[0];
-  const parts = item.dan.split(' ');
-  const shuffled = shuffle(parts.slice());
-  openModal(`
-    <h2>Построение предложения</h2>
-    <div class="small-muted">Соберите предложение по-датски: ${item.ru}</div>
-    <div style="margin-top:12px">
-      <div class="dragArea" id="dropArea"></div>
-      <div style="margin-top:12px" id="chipsArea"></div>
-    </div>
-    <div class="btnRow" style="margin-top:12px"><button class="btn ghost" id="cancelSent">Отмена</button><button class="btn primary" id="checkSent">Проверить</button></div>
-  `);
-  const dropArea = el('dropArea'), chipsArea = el('chipsArea');
-  shuffled.forEach(p=>{
-    const c = document.createElement('div'); c.className='chip'; c.textContent=p; c.draggable=true;
-    c.addEventListener('dragstart', (e)=>{ c.classList.add('dragging'); e.dataTransfer.setData('text/plain', p); });
-    c.addEventListener('dragend', ()=>{ c.classList.remove('dragging'); });
-    chipsArea.appendChild(c);
-  });
-  dropArea.addEventListener('dragover', (e)=>{ e.preventDefault(); });
-  dropArea.addEventListener('drop', (e)=>{ e.preventDefault(); const text = e.dataTransfer.getData('text/plain'); const chip = Array.from(chipsArea.children).find(ch=>ch.textContent===text); if(chip) dropArea.appendChild(chip); });
-  el('cancelSent').onclick = closeModal;
-  el('checkSent').onclick = ()=>{
-    const assembled = Array.from(dropArea.children).map(c=>c.textContent).join(' ');
-    const correct = parts.join(' ');
-    if(assembled.trim() === correct.trim()){ addPoints(12); alert('Правильно! +12 очков'); }
-    else { addPoints(2); alert(`Неправильно. Собрано: "${assembled}". Правильно: "${correct}". +2 очка`); }
-    closeModal();
-  };
-}
-
-/* Text comprehension */
-function exerciseText(lesson){
-  const data = lesson.text || { dan:'Kort tekst', ru:'Короткий текст' };
-  openModal(`
-    <h2>Текстовое понимание</h2>
-    <div class="small-muted">Прочитайте текст и ответьте на вопросы</div>
-    <div style="margin-top:12px;background:rgba(255,255,255,0.02);padding:12px;border-radius:8px">${data.dan}</div>
-    <div id="mcqArea" style="margin-top:12px"></div>
-    <div class="btnRow" style="margin-top:12px"><button class="btn ghost" id="closeText">Закрыть</button></div>
-  `);
-  const mcqArea = el('mcqArea');
-  // For demo, create 2 simple questions by splitting text
-  const q1 = { q:`Hvad handler teksten om?`, opts:[data.ru, 'Noget andet', 'Intet'], a:0 };
-  const q2 = { q:`Er teksten lang?`, opts:['Ja','Nej','Måske'], a:1 };
-  [q1,q2].forEach((qq, idx)=>{
-    const block = document.createElement('div'); block.style.marginTop='10px';
-    block.innerHTML = `<div class="small-muted" style="font-weight:800">${idx+1}. ${qq.q}</div>`;
-    qq.opts.forEach((opt,i)=>{
-      const b = document.createElement('button'); b.className='cardItem optionBtn'; b.textContent = opt; b.style.marginTop='6px';
-      b.onclick = ()=>{ if(i===qq.a){ b.classList.add('correct'); addPoints(6); alert('Верно! +6 очков'); } else { b.classList.add('wrong'); addPoints(1); alert('Неверно. +1 очко'); } Array.from(block.querySelectorAll('.optionBtn')).forEach(x=>x.disabled=true); };
-      block.appendChild(b);
+/* Render current block */
+const session = { lesson: null };
+function renderBlock(){
+  const area = $('blockArea'); area.innerHTML = '';
+  if(!session.lesson) return;
+  const { lesson, blockIndex } = session.lesson;
+  const block = BLOCKS[blockIndex];
+  $('assistantMsg').textContent = `Блок: ${block}`;
+  if(block === 'intro'){
+    area.innerHTML = `<div class="card"><h3>Введение</h3><div class="small-muted">Цель урока: ${lesson.title}</div><div style="margin-top:8px">${lesson.desc}</div></div>`;
+  } else if(block === 'vocab_new'){
+    area.innerHTML = `<h3>Новые слова</h3><div class="small-muted">Прослушайте и повторите</div><div id="vocabList"></div>`;
+    const list = lesson.vocab || [];
+    const vl = $('vocabList');
+    list.forEach(w=>{
+      const row = document.createElement('div'); row.className='vocabRow';
+      row.innerHTML = `<div><strong>${w.dan}</strong><div class="small-muted">${w.ru}</div></div><div><button class="btn ghost" data-dan="${w.dan}">▶</button></div>`;
+      vl.appendChild(row);
+      row.querySelector('button').onclick = ()=> speak(w.dan);
     });
-    mcqArea.appendChild(block);
-  });
-  el('closeText').onclick = closeModal;
+  } else if(block === 'grammar'){
+    area.innerHTML = `<h3>Грамматика</h3><div class="small-muted">${lesson.grammar.title}</div><div style="margin-top:8px">${lesson.grammar.text}</div><div style="margin-top:8px"><strong>Примеры:</strong><ul>${lesson.grammar.examples.map(e=>`<li>${e}</li>`).join('')}</ul></div>`;
+  } else if(block === 'practice_vocab'){
+    area.innerHTML = `<h3>Практика слов</h3><div class="small-muted">Выберите перевод</div><div id="practiceVocabArea"></div>`;
+    practiceVocab(lesson);
+    return;
+  } else if(block === 'practice_grammar'){
+    area.innerHTML = `<h3>Практика грамматики</h3><div class="small-muted">Примените правило</div><div id="practiceGrammarArea"></div>`;
+    practiceGrammar(lesson);
+    return;
+  } else if(block === 'sentence'){
+    area.innerHTML = `<h3>Построение предложений</h3><div class="small-muted">Соберите предложение</div><div id="sentenceArea"></div>`;
+    practiceSentence(lesson);
+    return;
+  } else if(block === 'reading'){
+    area.innerHTML = `<h3>Чтение</h3><div class="small-muted">Короткий текст</div><div style="margin-top:8px;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px">${lesson.text.dan}</div>`;
+  } else if(block === 'quiz'){
+    area.innerHTML = `<h3>Контрольный квиз</h3><div class="small-muted">Наберите минимум 70% для зачёта</div><div id="quizArea"></div>`;
+    practiceQuiz(lesson);
+    return;
+  } else if(block === 'review'){
+    area.innerHTML = `<h3>Повторение (SRS)</h3><div class="small-muted">Повторите слабые слова</div><div id="reviewArea"></div>`;
+    practiceReview();
+    return;
+  } else if(block === 'complete'){
+    area.innerHTML = `<h3>Завершение урока</h3><div id="completeArea"></div>`;
+    completeLesson();
+    return;
+  }
+  // show next button
+  const nextBtn = document.createElement('div'); nextBtn.style.marginTop='12px';
+  nextBtn.innerHTML = `<button class="btn primary" id="nextBlockBtn">Далее</button>`;
+  area.appendChild(nextBtn);
+  $('nextBlockBtn').onclick = ()=> { session.lesson.blockIndex++; renderBlock(); };
 }
 
-/* Short quiz */
-function exerciseQuiz(lesson){
-  const qset = [
-    { q:'Hvad betyder "tak"?', opts:['Спасибо','Пожалуйста','Привет'], a:0 },
-    { q:'Hvordan siger man "до свидания"?', opts:['Hej','Farvel','Goddag'], a:1 },
-    { q:'Hvad er "hus"?', opts:['Дом','Машина','Книга'], a:0 }
-  ];
-  let idx = 0; let score = 0;
-  openModal(`
-    <h2>Короткий квиз</h2>
-    <div class="small-muted" id="quizHint">Вопросы по теме</div>
-    <div id="quizArea" style="margin-top:12px"></div>
-    <div class="btnRow" style="margin-top:12px"><button class="btn ghost" id="closeQuiz">Закрыть</button></div>
-  `);
-  const quizArea = el('quizArea');
+/* Practice vocab: multiple choice */
+function practiceVocab(lesson){
+  const area = $('practiceVocabArea'); area.innerHTML = '';
+  const list = shuffle(lesson.vocab || []);
+  let i = 0, correct = 0;
   function renderQ(){
-    if(idx >= qset.length){ addPoints(score*5); alert(`Квиз завершён. Правильных: ${score}. +${score*5} очков`); closeModal(); return; }
-    const Q = qset[idx]; quizArea.innerHTML = `<div class="small-muted" style="font-weight:800">${idx+1}. ${Q.q}</div>`;
-    Q.opts.forEach((opt,i)=>{ const b=document.createElement('button'); b.className='cardItem optionBtn'; b.textContent=opt; b.style.marginTop='8px'; b.onclick=()=>{ if(i===Q.a){ b.classList.add('correct'); score++; } else { b.classList.add('wrong'); } Array.from(quizArea.querySelectorAll('.optionBtn')).forEach(x=>x.disabled=true); setTimeout(()=>{ idx++; renderQ(); },800); }; quizArea.appendChild(b); });
+    if(i >= list.length){ alert(`Практика завершена. Правильных: ${correct}/${list.length}`); session.lesson.blockIndex++; renderBlock(); return; }
+    const w = list[i];
+    const opts = shuffle([w.ru, ...getRandomRu(lesson, 3)]);
+    area.innerHTML = `<div style="font-weight:900">${w.dan}</div><div class="small-muted" style="margin-top:8px">Выберите перевод</div>`;
+    opts.forEach(o=>{
+      const b = document.createElement('button'); b.className='option'; b.textContent = o; b.onclick = ()=>{
+        if(o === w.ru){ b.classList.add('correct'); correct++; recordSRS(w.id, 5); } else { b.classList.add('wrong'); recordSRS(w.id, 2); }
+        Array.from(area.querySelectorAll('.option')).forEach(x=>x.disabled=true);
+        setTimeout(()=>{ i++; renderQ(); }, 700);
+      };
+      area.appendChild(b);
+    });
   }
-  el('closeQuiz').onclick = closeModal; renderQ();
+  renderQ();
 }
 
-/* ===== Pre-check test ===== */
-el('startPrecheck').onclick = ()=>{
-  openModal(`
-    <h2>Проверка знаний</h2>
-    <div class="small-muted">Короткий тест для определения уровня</div>
-    <div id="preArea" style="margin-top:12px"></div>
-    <div class="btnRow" style="margin-top:12px"><button class="btn ghost" id="cancelPre">Отмена</button></div>
-  `);
-  const preArea = el('preArea'); const questions = [
-    { q:'Hvad betyder "hej"?', opts:['Привет','Пока','Спасибо'], a:0 },
-    { q:'Hvad betyder "tak"?', opts:['Спасибо','Пожалуйста','Извините'], a:0 },
-    { q:'Hvordan siger man "до свидания"?', opts:['Hej','Farvel','Goddag'], a:1 }
-  ];
-  let idx = 0; let correct = 0;
-  function renderPre(){
-    if(idx >= questions.length){
-      const cur = getCurrentUser();
-      if(cur){ const prog = loadProgress(); if(!prog[cur]) prog[cur] = { level:'A1', points:0, completed:{}, lessonProgress:{} }; prog[cur].points = (prog[cur].points || 0) + correct*3; saveProgress(prog); renderProfile(); }
-      alert(`Тест завершён. Правильных: ${correct}/${questions.length}. +${correct*3} очков`); closeModal(); return;
-    }
-    const Q = questions[idx]; preArea.innerHTML = `<div class="small-muted" style="font-weight:800">${idx+1}. ${Q.q}</div>`;
-    Q.opts.forEach((opt,i)=>{ const b=document.createElement('button'); b.className='cardItem optionBtn'; b.textContent=opt; b.style.marginTop='8px'; b.onclick=()=>{ if(i===Q.a){ b.classList.add('correct'); correct++; } else { b.classList.add('wrong'); } Array.from(preArea.querySelectorAll('.optionBtn')).forEach(x=>x.disabled=true); setTimeout(()=>{ idx++; renderPre(); },700); }; preArea.appendChild(b); });
+/* Helper: get random ru translations from lesson or global */
+function getRandomRu(lesson, n){
+  const pool = (lesson.vocab || []).map(x=>x.ru).filter(Boolean);
+  const res = [];
+  while(res.length < n && pool.length){
+    const idx = Math.floor(Math.random()*pool.length);
+    res.push(pool.splice(idx,1)[0]);
   }
-  el('cancelPre').onclick = closeModal; renderPre();
-};
+  // fallback common words
+  const fallback = ['спасибо','мама','дом','вода','хлеб','да'];
+  while(res.length < n) res.push(fallback[Math.floor(Math.random()*fallback.length)]);
+  return res;
+}
 
-/* ===== Search, import/export ===== */
-el('searchBtn').onclick = ()=>{ const q = el('searchInput').value.trim().toLowerCase(); const res = lessons.filter(l=> l.title.toLowerCase().includes(q) || l.desc.toLowerCase().includes(q) || (l.vocab && l.vocab.some(v=> (v.dan||'').toLowerCase().includes(q) || (v.ru||'').toLowerCase().includes(q)))); const out = el('searchResults'); out.innerHTML = ''; if(!res.length){ out.textContent = 'Ничего не найдено'; return; } res.forEach(r=>{ const d=document.createElement('div'); d.className='cardItem'; d.style.marginTop='8px'; d.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><div><strong>${r.title}</strong><div class="small-muted">${r.desc}</div></div><button class="btn ghost">Открыть</button></div>`; d.querySelector('button').onclick = ()=> openLesson(r.id); out.appendChild(d); }); };
-el('exportData').onclick = ()=>{ const data = JSON.stringify(lessons, null, 2); navigator.clipboard.writeText(data).then(()=> alert('Уроки скопированы в буфер обмена (JSON)')); };
-el('importData').onclick = ()=>{ openModal(`<h2>Импорт уроков</h2><div class="small-muted">Вставьте JSON с уроками</div><textarea id="importArea" style="width:100%;height:220px;margin-top:12px;background:transparent;border:1px solid var(--glass);color:var(--text);padding:8px;border-radius:8px"></textarea><div class="btnRow" style="margin-top:12px"><button class="btn ghost" id="cancelImport">Отмена</button><button class="btn primary" id="doImport">Импортировать</button></div>`); el('cancelImport').onclick = closeModal; el('doImport').onclick = ()=>{ try{ const txt = el('importArea').value.trim(); const arr = JSON.parse(txt); if(!Array.isArray(arr)) throw new Error('Invalid'); lessons = arr; saveJSON(STORAGE_LESSONS, lessons); renderLessons(); closeModal(); alert('Импорт завершён'); } catch(e){ alert('Ошибка импорта: неверный формат JSON'); } }; };
+/* Practice grammar: simple recognition (true/false) */
+function practiceGrammar(lesson){
+  const area = $('practiceGrammarArea'); area.innerHTML = '';
+  const examples = lesson.grammar.examples || [];
+  let i = 0, correct = 0;
+  function renderG(){
+    if(i >= examples.length){ alert(`Грамматика: ${correct}/${examples.length}`); session.lesson.blockIndex++; renderBlock(); return; }
+    const ex = examples[i];
+    area.innerHTML = `<div style="font-weight:900">${ex}</div><div class="small-muted" style="margin-top:8px">Это пример правила? (Да/Нет)</div>`;
+    const yes = document.createElement('button'); yes.className='option'; yes.textContent='Да'; yes.onclick = ()=>{ correct++; i++; renderG(); };
+    const no = document.createElement('button'); no.className='option'; no.textContent='Нет'; no.onclick = ()=>{ i++; renderG(); };
+    area.appendChild(yes); area.appendChild(no);
+  }
+  renderG();
+}
 
-/* ===== TTS voices ===== */
+/* Sentence building (drag & drop simplified) */
+function practiceSentence(lesson){
+  const area = $('sentenceArea'); area.innerHTML = '';
+  const sent = (lesson.sentences && lesson.sentences[0]) || 'Tak for i dag';
+  const parts = sent.split(' ');
+  const shuffled = shuffle(parts.slice());
+  area.innerHTML = `<div class="dragArea" id="dropArea"></div><div style="margin-top:8px" id="chipsArea"></div><div style="margin-top:8px"><button class="btn ghost" id="checkSentBtn">Проверить</button></div>`;
+  const chips = $('chipsArea'), drop = $('dropArea');
+  shuffled.forEach(p=>{ const c = document.createElement('div'); c.className='chip'; c.textContent = p; c.draggable = true; c.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', p); }); chips.appendChild(c); });
+  drop.addEventListener('dragover', e=>e.preventDefault());
+  drop.addEventListener('drop', e=>{ e.preventDefault(); const t = e.dataTransfer.getData('text/plain'); const node = Array.from(chips.children).find(x=>x.textContent===t); if(node) drop.appendChild(node); });
+  $('checkSentBtn').onclick = ()=>{ const assembled = Array.from(drop.children).map(x=>x.textContent).join(' '); if(assembled.trim() === parts.join(' ').trim()){ alert('Правильно!'); addPoints(10); } else { alert(`Неправильно. Собрано: "${assembled}"`); addPoints(2); } session.lesson.blockIndex++; renderBlock(); };
+}
+
+/* Quiz */
+function practiceQuiz(lesson){
+  const area = $('quizArea'); area.innerHTML = '';
+  const qset = lesson.quiz || [];
+  let i = 0, correct = 0;
+  function renderQ(){
+    if(i >= qset.length){
+      const pct = Math.round((correct / qset.length) * 100);
+      alert(`Квиз завершён. Правильных: ${correct}/${qset.length} (${pct}%)`);
+      // check pass threshold 70%
+      if(pct >= 70) { markLessonPassed(true); } else { markLessonPassed(false); }
+      session.lesson.blockIndex++; renderBlock();
+      return;
+    }
+    const q = qset[i];
+    area.innerHTML = `<div style="font-weight:900">${q.q}</div>`;
+    q.opts.forEach((opt, idx)=>{
+      const b = document.createElement('button'); b.className='option'; b.textContent = opt; b.onclick = ()=>{
+        if(idx === q.a){ b.classList.add('correct'); correct++; } else { b.classList.add('wrong'); }
+        Array.from(area.querySelectorAll('.option')).forEach(x=>x.disabled=true);
+        setTimeout(()=>{ i++; renderQ(); }, 700);
+      };
+      area.appendChild(b);
+    });
+  }
+  renderQ();
+}
+
+/* Review: show due SRS items */
+function practiceReview(){
+  const area = $('reviewArea'); area.innerHTML = '';
+  const cur = localStorage.getItem(KEY_CURRENT); if(!cur){ area.textContent='Войдите, чтобы повторять'; return; }
+  const prog = loadProgress(); const user = prog[cur];
+  const due = [];
+  for(const id in user.srs || {}){
+    const it = user.srs[id];
+    if(it.nextReview && it.nextReview <= now()) due.push(it);
+  }
+  if(due.length === 0){ area.textContent = 'Повторений нет'; session.lesson.blockIndex++; renderBlock(); return; }
+  let i = 0;
+  function renderDue(){
+    if(i >= due.length){ alert('Повторения завершены'); session.lesson.blockIndex++; renderBlock(); return; }
+    const it = due[i];
+    area.innerHTML = `<div style="font-weight:900">${it.dan}</div><div class="small-muted">${it.ru}</div><div style="margin-top:8px"><button class="btn ghost" id="revGood">Я помню</button><button class="btn ghost" id="revBad">Не помню</button></div>`;
+    $('revGood').onclick = ()=>{ sm2_update(it, 5); saveProgress(prog); i++; renderDue(); };
+    $('revBad').onclick = ()=>{ sm2_update(it, 2); saveProgress(prog); i++; renderDue(); };
+  }
+  renderDue();
+}
+
+/* Record SRS for a vocab id */
+function recordSRS(wordId, quality){
+  const cur = localStorage.getItem(KEY_CURRENT); if(!cur) return;
+  const prog = loadProgress(); if(!prog[cur]) prog[cur] = { level:'A1', points:0, completed:{}, srs:{}, currentLessonIndex:0 };
+  const user = prog[cur];
+  if(!user.srs[wordId]) {
+    // find word in lessons
+    let found = null;
+    for(const ls of lessons){ const w = (ls.vocab||[]).find(x=>x.id===wordId); if(w){ found = { dan:w.dan, ru:w.ru }; break; } }
+    user.srs[wordId] = { id: wordId, dan: found ? found.dan : wordId, ru: found ? found.ru : '', ef:2.5, repetitions:0, interval:0, nextReview: now() };
+  }
+  sm2_update(user.srs[wordId], quality);
+  saveProgress(prog);
+}
+
+/* Mark lesson passed and unlock next */
+function markLessonPassed(passed){
+  const cur = localStorage.getItem(KEY_CURRENT); if(!cur) return;
+  const prog = loadProgress(); const user = prog[cur];
+  const idx = user.currentLessonIndex || 0;
+  if(passed){
+    user.completed = user.completed || {};
+    user.completed[lessons[idx].id] = true;
+    user.points = (user.points || 0) + 20;
+    // unlock next
+    user.currentLessonIndex = Math.min(lessons.length - 1, idx + 1);
+    saveProgress(prog);
+    renderProfile();
+    alert('Урок зачтён. Следующий урок разблокирован.');
+  } else {
+    alert('Вы не набрали проходной балл. Система предложит дополнительные повторения.');
+    // schedule extra repeats: mark some vocab items with low ef for immediate review
+    const low = (lessons[idx].vocab || []).slice(0,2);
+    low.forEach(w => {
+      recordSRS(w.id, 2);
+    });
+  }
+}
+
+/* Complete lesson block */
+function completeLesson(){
+  const area = $('completeArea'); area.innerHTML = '';
+  const cur = localStorage.getItem(KEY_CURRENT); if(!cur) return;
+  const prog = loadProgress(); const user = prog[cur];
+  const idx = session.lesson.idx;
+  const lesson = lessons[idx];
+  user.completed = user.completed || {};
+  user.completed[lesson.id] = true;
+  user.points = (user.points || 0) + 10;
+  // unlock next lesson
+  user.currentLessonIndex = Math.min(lessons.length - 1, idx + 1);
+  saveProgress(prog);
+  renderProfile(); renderLessonsList();
+  area.innerHTML = `<div>Урок "${lesson.title}" завершён. +10 очков</div><div style="margin-top:8px"><button class="btn primary" id="finishBtn">Продолжить</button></div>`;
+  $('finishBtn').onclick = ()=>{ session.lesson = null; $('startLessonBtn').style.display = 'inline-block'; $('nextAutoBtn').style.display = 'none'; $('blockArea').innerHTML = ''; $('flowTitle').textContent = 'Готово к началу'; $('flowSubtitle').textContent = 'Нажмите «Начать урок»'; };
+}
+
+/* Render profile and progress */
+function renderProfile(){
+  const cur = localStorage.getItem(KEY_CURRENT);
+  const prog = loadProgress();
+  if(cur && prog[cur]){
+    $('userName').textContent = cur;
+    $('userLevel').textContent = `Уровень: ${prog[cur].level || 'A1'}`;
+    $('points').textContent = prog[cur].points || 0;
+    $('avatar').textContent = cur[0].toUpperCase();
+    // due count
+    const due = Object.values(prog[cur].srs || {}).filter(it => it.nextReview && it.nextReview <= now()).length;
+    $('dueCount').textContent = due;
+    // current lesson title
+    const idx = prog[cur].currentLessonIndex || 0;
+    $('currentLessonTitle').textContent = lessons[idx] ? lessons[idx].title : '—';
+    // lesson progress text (simple)
+    $('lessonProgressText').textContent = `Урок ${idx+1} из ${lessons.length}`;
+    $('lessonProgress').style.width = `${Math.round((idx/lessons.length)*100)}%`;
+  } else {
+    $('userName').textContent = 'Гость';
+    $('userLevel').textContent = 'Уровень: —';
+    $('points').textContent = '0';
+    $('avatar').textContent = 'Ж';
+    $('dueCount').textContent = '0';
+    $('currentLessonTitle').textContent = '—';
+    $('lessonProgressText').textContent = '0 / 0';
+    $('lessonProgress').style.width = '0%';
+  }
+}
+
+/* TTS */
 let voices = [];
 function populateVoices(){
-  voices = speechSynthesis.getVoices().filter(v=> v.lang && v.lang.startsWith('da') || v.lang.startsWith('en') || v.lang.startsWith('ru'));
-  const sel = el('voiceSelect'); sel.innerHTML = ''; voices.forEach(v=>{ const opt = document.createElement('option'); opt.value = v.name; opt.textContent = `${v.name} — ${v.lang}`; sel.appendChild(opt); });
+  voices = speechSynthesis.getVoices();
+  const sel = $('voiceSelect'); sel.innerHTML = '';
+  voices.forEach(v=>{ const opt = document.createElement('option'); opt.value = v.name; opt.textContent = `${v.name} — ${v.lang}`; sel.appendChild(opt); });
 }
 speechSynthesis.onvoiceschanged = populateVoices;
 populateVoices();
-el('speakSample').onclick = ()=>{ const text = 'Hej! Velkommen til dansk med Zhenya.'; const ut = new SpeechSynthesisUtterance(text); const sel = el('voiceSelect').value; const v = voices.find(x=>x.name===sel); if(v) ut.voice = v; ut.rate = 1; speechSynthesis.speak(ut); };
-
-/* ===== Mini games placeholders (Pomodoro, Tycoon, Casino) ===== */
-el('openPom').onclick = ()=>{ openModal(`<h2>Pomodoro</h2><div class="small-muted">Фокус‑таймер</div><div style="margin-top:12px" id="pomArea"></div><div class="btnRow" style="margin-top:12px"><button class="btn ghost" onclick="closeModal()">Закрыть</button></div>`); const area = el('pomArea'); area.innerHTML = `<div class="small-muted">Сессия 25 минут</div><div style="margin-top:8px" id="pomTimer" class="big">25:00</div><div style="margin-top:8px"><button class="btn primary" id="pomStart">Start</button><button class="btn ghost" id="pomStop">Стоп</button></div>`; let timer=null; let sec=25*60; function fmt(s){ const m=Math.floor(s/60).toString().padStart(2,'0'); const ss=(s%60).toString().padStart(2,'0'); return `${m}:${ss}`; } el('pomStart').onclick = ()=>{ if(timer) return; timer=setInterval(()=>{ sec--; el('pomTimer').textContent = fmt(sec); if(sec<=0){ clearInterval(timer); timer=null; addPoints(20); alert('Сессия завершена! +20 очков'); } },1000); }; el('pomStop').onclick = ()=>{ if(timer) clearInterval(timer); timer=null; sec=25*60; el('pomTimer').textContent = fmt(sec); }; };
-
-el('openTycoon').onclick = ()=>{ alert('Tycoon модуль можно подключить отдельно.'); };
-el('openCasino').onclick = ()=>{ alert('Casino модуль можно подключить отдельно.'); };
-
-/* ===== Menu navigation ===== */
-document.querySelectorAll('.menu button').forEach(btn=>{ btn.onclick = ()=>{ document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const view = btn.dataset.view; if(view==='profile') showProfileModal(); else if(view==='games') alert('Игры — откроются в модуле'); else if(view==='practice') alert('Практика — используйте уроки и упражнения'); }; });
-
-function showProfileModal(){
-  const cur = getCurrentUser(); const users = loadUsers(); const prog = loadProgress();
-  openModal(`<h2>Профиль</h2><div class="small-muted">Пользователь: ${cur || 'Гость'}</div><div style="margin-top:12px"><label class="small-muted">Уровень</label><select id="profileLevel" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid var(--glass);color:var(--text)"><option value="A1">A1</option><option value="A2">A2</option></select></div><div style="margin-top:12px" class="small-muted">Очки: ${cur && prog[cur] ? prog[cur].points : 0}</div><div class="btnRow" style="margin-top:12px"><button class="btn ghost" onclick="closeModal()">Закрыть</button><button class="btn primary" id="saveProf">Сохранить</button></div>`);
-  el('profileLevel').value = cur && prog[cur] ? prog[cur].level : 'A1';
-  el('saveProf').onclick = ()=>{ if(!cur){ alert('Войдите, чтобы сохранить'); return; } const lvl = el('profileLevel').value; const p = loadProgress(); if(!p[cur]) p[cur] = { level:lvl, points:0, completed:{}, lessonProgress:{} }; p[cur].level = lvl; saveProgress(p); renderProfile(); closeModal(); };
+function speak(text){
+  if(!('speechSynthesis' in window)) return alert('TTS не поддерживается в этом браузере');
+  const u = new SpeechSynthesisUtterance(text);
+  const sel = $('voiceSelect').value;
+  const v = voices.find(x=>x.name === sel);
+  if(v) u.voice = v;
+  u.rate = 1;
+  speechSynthesis.speak(u);
 }
+$('speakBtn').onclick = ()=> speak('Hej! Velkommen til dansk med Zhenya.');
+$('stopSpeakBtn').onclick = ()=> speechSynthesis.cancel();
 
-/* ===== Initialization ===== */
-renderAuthArea(); renderLessons(); renderProfile(); updateAssistant('Привет! Я Женя — твой помощник по датскому. Зарегистрируйся или войди, чтобы сохранять прогресс.');
+/* Start / Next block controls */
+$('startLessonBtn').onclick = ()=> {
+  const cur = localStorage.getItem(KEY_CURRENT);
+  if(!cur) return alert('Войдите или зарегистрируйтесь');
+  startLessonFlow();
+};
+$('nextAutoBtn').onclick = ()=> {
+  if(session.lesson){ session.lesson.blockIndex++; renderBlock(); }
+};
 
-/* Expose closeModal to inline handlers */
+/* Export user data */
+$('btnExport').onclick = ()=> {
+  const cur = localStorage.getItem(KEY_CURRENT);
+  if(!cur) return alert('Войдите, чтобы экспортировать прогресс');
+  const prog = loadProgress();
+  const data = { user: cur, progress: prog[cur], lessons };
+  const txt = JSON.stringify(data, null, 2);
+  navigator.clipboard.writeText(txt).then(()=> alert('Данные скопированы в буфер обмена'));
+};
+
+/* Render lessons list and profile on load */
+function renderAll(){
+  renderAuth();
+  renderLessonsList();
+  renderProfile();
+}
+renderAll();
+
+/* Initial guidance */
+$('assistantMsg').textContent = 'Система готова. Зарегистрируйтесь и начните первый урок — всё будет идти по очереди.';
+
+/* Expose closeModal for inline use */
 window.closeModal = closeModal;
 
-/* End of script */
+/* Utility: shuffle */
+function shuffle(arr){ return arr.map(a=>[Math.random(),a]).sort((a,b)=>a[0]-b[0]).map(a=>a[1]); }
+
+/* Simple addPoints helper */
+function addPoints(n){
+  const cur = localStorage.getItem(KEY_CURRENT); if(!cur) return;
+  const prog = loadProgress(); if(!prog[cur]) prog[cur] = { level:'A1', points:0, completed:{}, srs:{}, currentLessonIndex:0 };
+  prog[cur].points = (prog[cur].points || 0) + n; saveProgress(prog); renderProfile();
+}
+
 </script>
 </body>
 </html>
